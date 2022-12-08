@@ -1,16 +1,10 @@
 import { Theme } from '@emotion/react';
 
 const theme: Theme = {
-  size: {
-    tablet: '640px',
-    laptop: '1200px',
-    desktop: '1800px',
-  },
   colors: {
-    red: '#f26462',
-    primaryGray: '#3f4150',
-    border: '#EFEFEF',
-    selected: '#f2f2f2',
+    primary: '#8d6e63',
+    primaryLight: '#d3b8ae',
+    primaryDark: '#5f4339',
   },
   calcRem: pxSize => {
     return `${pxSize / 16}rem`;
