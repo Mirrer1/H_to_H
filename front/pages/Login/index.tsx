@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import { LoginWrapper, FormWrapper, FormItem, FormBtn, ImageWrapper, ImageText, ImageBtn } from '@styles/login';
+import { LoginWrapper, FormWrapper, FormItem, FormBtn, ImageWrapper, ImageMainText, ImageSubText } from '@styles/login';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
@@ -51,15 +51,15 @@ const LogIn = () => {
         <ImageWrapper>
           <img src="https://i.ibb.co/6HSn38z/Mobile.png" alt="login image" />
 
-          <ImageText>
+          <ImageMainText>
             <h2>New here?</h2>
             <p>H to H는 다양한 사람과 대화를 나눌 수 있어요.</p>
-            <p>이를 통해 자신의 가치관을 배우고, 나누고, 성장해보세요!</p>
-          </ImageText>
+            <p>이를 통해 자신의 가치관을 공유하고, 나누고, 성장해보세요!</p>
+          </ImageMainText>
 
-          <ImageBtn>
+          <ImageSubText>
             <p>Made by Mirrer</p>
-          </ImageBtn>
+          </ImageSubText>
         </ImageWrapper>
       </LoginWrapper>
     </>

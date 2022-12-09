@@ -26,7 +26,7 @@ export const FormWrapper = styled.div`
 
     & > header {
       font-size: 3rem;
-      margin-bottom: 1.5em;
+      margin-bottom: 1em;
     }
   }
 `;
@@ -49,12 +49,12 @@ export const FormItem = styled.label`
   ${media.desktop} {
     & > div {
       font-size: 1.5rem;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
     }
 
     & > input {
       font-size: 1.5rem;
-      margin-bottom: 4em;
+      margin-bottom: 3em;
     }
   }
 `;
@@ -112,7 +112,7 @@ export const ImageWrapper = styled.div`
   }
 `;
 
-export const ImageText = styled.div`
+export const ImageMainText = styled.div`
   position: absolute;
   top: 10%;
 
@@ -142,7 +142,7 @@ export const ImageText = styled.div`
   }
 `;
 
-export const ImageBtn = styled.div`
+export const ImageSubText = styled.div`
   position: absolute;
   bottom: 30%;
 
