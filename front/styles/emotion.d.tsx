@@ -8,7 +8,7 @@ declare module '@emotion/react' {
       primaryDark: string;
     };
     calcRem: (pxSize: number) => string;
-    flexSet: () => string;
-    flexColumnSet: () => string;
+    flexSet: (just?: string, align?: string) => string;
+    flexColumnSet: (just?: string, align?: string) => string;
   }
 }

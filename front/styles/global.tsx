@@ -25,7 +25,7 @@ const style = css`
     tab-size: 4;
   }
 
-  html, body {
+  html, body, #app {
     height: 100%;
     font-family: "DM Sans", sans-serif;
   }

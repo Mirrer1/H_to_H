@@ -2,9 +2,9 @@ import { Theme } from '@emotion/react';
 
 const theme: Theme = {
   colors: {
-    primary: '#8d6e63',
-    primaryLight: '#d3b8ae',
-    primaryDark: '#5f4339',
+    primary: '#b99976',
+    primaryLight: '#d2b48c',
+    primaryDark: '#987554',
   },
   calcRem: pxSize => {
     return `${pxSize / 16}rem`;
