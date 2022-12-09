@@ -52,7 +52,7 @@ const LogIn = () => {
           <img src="https://i.ibb.co/6HSn38z/Mobile.png" alt="login image" />
 
           <ImageText>
-            <h1>New here?</h1>
+            <h2>New here?</h2>
             <p>H to H는 다양한 사람과 대화를 나눌 수 있어요.</p>
             <p>이를 통해 자신의 가치관을 배우고, 나누고, 성장해보세요!</p>
           </ImageText>

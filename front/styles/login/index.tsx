@@ -1,23 +1,33 @@
 import styled from '@emotion/styled';
 import media from '../media';
 
-// ${media[0]} {
-//   font-size: 50px;
-// }
 export const LoginWrapper = styled.div`
   height: 100%;
   ${props => props.theme.flexColumnSet('space-between')};
+
+  ${media.desktop} {
+    flex-direction: row;
+  }
 `;
 
 export const FormWrapper = styled.div`
   text-align: center;
-  padding: 2em 0;
+  margin: auto 0;
   ${props => props.theme.flexColumnSet()};
 
   & > header {
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 1em;
+  }
+
+  ${media.desktop} {
+    margin: 0 auto;
+
+    & > header {
+      font-size: 3rem;
+      margin-bottom: 1.5em;
+    }
   }
 `;
 
@@ -29,12 +39,23 @@ export const FormItem = styled.label`
 
   & > input {
     width: 22em;
-    height: 3em;
     font-size: 0.5rem;
     border: none;
     border-bottom: 1px solid #bdbdbd;
     margin-bottom: 2em;
     outline: none;
+  }
+
+  ${media.desktop} {
+    & > div {
+      font-size: 1.5rem;
+      margin-bottom: 1em;
+    }
+
+    & > input {
+      font-size: 1.5rem;
+      margin-bottom: 4em;
+    }
   }
 `;
 
@@ -48,7 +69,7 @@ export const FormBtn = styled.button<{ login?: boolean }>`
   background-color: ${props => props.login && props.theme.colors.primary};
   margin-bottom: ${props => props.login && '0.5em'};
   border: ${props => props.login || '1px solid #bdbdbd'};
-  transition: all 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out, box-shadow 150ms ease-in-out;
 
   &:hover {
     opacity: 0.75;
@@ -62,6 +83,13 @@ export const FormBtn = styled.button<{ login?: boolean }>`
   & > span {
     color: black;
     font-weight: 700;
+  }
+
+  ${media.desktop} {
+    width: 19em;
+    font-size: 1.8rem;
+    padding: 0.5em 0;
+    margin-bottom: ${props => props.login && '1em'};
   }
 `;
 
@@ -77,13 +105,18 @@ export const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
+
+  ${media.desktop} {
+    width: 40%;
+    height: 100%;
+  }
 `;
 
 export const ImageText = styled.div`
   position: absolute;
   top: 10%;
 
-  & > h1 {
+  & > h2 {
     font-size: 1.4rem;
     font-weight: 700;
     color: white;
@@ -97,6 +130,16 @@ export const ImageText = styled.div`
     opacity: 80%;
     margin-bottom: 0.2em;
   }
+
+  ${media.desktop} {
+    & > h2 {
+      font-size: 3rem;
+    }
+
+    & > p {
+      font-size: 1.3rem;
+    }
+  }
 `;
 
 export const ImageBtn = styled.div`
@@ -105,9 +148,16 @@ export const ImageBtn = styled.div`
 
   & > p {
     width: 8em;
+    font-size: 1rem;
     color: white;
     opacity: 80%;
     border: 1.5px solid white;
     padding: 0.1em 0;
+  }
+
+  ${media.desktop} {
+    & > p {
+      font-size: 2rem;
+    }
   }
 `;
