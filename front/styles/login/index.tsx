@@ -45,7 +45,7 @@ export const FormBtn = styled.button<{ login?: boolean }>`
   padding: 0.3em 0;
   color: ${props => (props.login ? 'white' : '#707070')};
   display: ${props => props.login && 'block'};
-  background-color: ${props => props.login && '#b99976'};
+  background-color: ${props => props.login && props.theme.colors.primary};
   margin-bottom: ${props => props.login && '0.5em'};
   border: ${props => props.login || '1px solid #bdbdbd'};
   transition: all 300ms ease-in-out;
