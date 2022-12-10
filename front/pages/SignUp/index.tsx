@@ -89,7 +89,7 @@ const SignUp = () => {
             <div>NICKNAME</div>
             <input type="text" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} />
           </SignupFormItem>
-          <FormError error={nicknameError}>닉네임은 2 ~ 16자 이하, 영어 또는 숫자 또는 한글로 구성해주세요.</FormError>
+          <FormError error={nicknameError}>닉네임은 2 ~ 16자 이하, 영어 또는 숫자 또는 한글로 입력해주세요.</FormError>
 
           <SignupFormItem id="password-label">
             <div>PASSWORD</div>
