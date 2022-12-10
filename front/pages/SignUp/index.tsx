@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { FormWrapper, Form, ImageMainText } from '@styles/login';
+import { FormWrapper, Form, ImageMainText, FormError } from '@styles/login';
 import { SignupImage, SignupImageSubText, SignupFormItem, SignupFormBtn, AgreeCheck } from '@styles/signup';
 
 const SignUp = () => {
@@ -9,14 +9,35 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [userTerm, setUserTerm] = useState(false);
+  const [submit, setSubmit] = useState(false);
+
+  const [idError, setIdError] = useState(false);
+  const [nicknameError, setNicknameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [termError, setTermError] = useState(false);
 
   const onSubmitForm = useCallback(
     e => {
       e.preventDefault();
-      console.log(email, nickname, password, checkPassword, userTerm);
+      setSubmit(true);
+
+      const emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      const nickRule = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+
+      !email || !email.match(emailRule) ? setIdError(true) : setIdError(false);
+      !nickname || !nickname.match(nickRule) ? setNicknameError(true) : setNicknameError(false);
+      !password || !(password === checkPassword) ? setPasswordError(true) : setPasswordError(false);
+      !userTerm ? setTermError(true) : setTermError(false);
     },
-    [email, nickname, password, checkPassword, userTerm],
+    [email, nickname, password, checkPassword, userTerm, idError],
   );
+
+  useEffect(() => {
+    if (submit && !idError && !nicknameError && !passwordError && !termError) {
+      console.log('에러 없으니 회원가입 ㄱ');
+      setSubmit(false);
+    }
+  }, [submit, idError, nicknameError, passwordError, termError]);
 
   const onChangeEmail = useCallback(e => {
     setEmail(e.target.value);
@@ -60,18 +81,21 @@ const SignUp = () => {
         <form onSubmit={onSubmitForm}>
           <SignupFormItem id="email-label">
             <div>EMAIL</div>
-            <input type="email" id="email" name="email" value={email} onChange={onChangeEmail} />
+            <input type="text" id="email" name="email" value={email} onChange={onChangeEmail} />
           </SignupFormItem>
+          <FormError error={idError}>Email 형식이 올바르지 않습니다.</FormError>
 
           <SignupFormItem id="nickname-label">
             <div>NICKNAME</div>
             <input type="text" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} />
           </SignupFormItem>
+          <FormError error={nicknameError}>닉네임은 2 ~ 16자 이하, 영어 또는 숫자 또는 한글로 구성해주세요.</FormError>
 
           <SignupFormItem id="password-label">
             <div>PASSWORD</div>
             <input type="password" id="password" name="password" value={password} onChange={onChangePassword} />
           </SignupFormItem>
+          <FormError error={passwordError}>Password가 일치하지 않습니다.</FormError>
 
           <SignupFormItem id="check-password-label">
             <div>CHECK PASSWORD</div>
@@ -83,6 +107,7 @@ const SignUp = () => {
               onChange={onChangeCheckPassword}
             />
           </SignupFormItem>
+          <FormError error={passwordError}>Password가 일치하지 않습니다.</FormError>
 
           <label id="userTerm-label">
             <AgreeCheck>
@@ -92,6 +117,7 @@ const SignUp = () => {
               </p>
             </AgreeCheck>
           </label>
+          <FormError error={termError}>개인정보 수집 및 이용에 동의해주세요.</FormError>
 
           <SignupFormBtn type="submit" mainBtn>
             SIGN UP

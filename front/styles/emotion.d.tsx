@@ -6,6 +6,7 @@ declare module '@emotion/react' {
       primary: string;
       primaryLight: string;
       primaryDark: string;
+      error: string;
     };
     calcRem: (pxSize: number) => string;
     flexSet: (just?: string, align?: string) => string;

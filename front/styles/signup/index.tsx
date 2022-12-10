@@ -20,16 +20,11 @@ export const SignupFormItem = styled(FormItem)`
     & > div {
       margin-bottom: 0;
     }
-
-    & > input {
-      margin-bottom: 1.5em;
-    }
   }
 `;
 
 export const AgreeCheck = styled.div`
   cursor: pointer;
-  margin-bottom: 2em;
   ${props => props.theme.flexSet()};
 
   & > input {

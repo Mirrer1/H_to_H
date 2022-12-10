@@ -5,6 +5,7 @@ const theme: Theme = {
     primary: '#b99976',
     primaryLight: '#d2b48c',
     primaryDark: '#987554',
+    error: '#c62828',
   },
   calcRem: pxSize => {
     return `${pxSize / 16}rem`;
