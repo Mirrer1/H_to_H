@@ -43,11 +43,17 @@ export const AgreeCheck = styled.div`
   }
 
   & > p {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
   }
 
   & > p > span {
     font-weight: 700;
+  }
+
+  ${media.desktop} {
+    & > p {
+      font-size: 1rem;
+    }
   }
 `;
 
