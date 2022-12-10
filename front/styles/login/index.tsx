@@ -16,7 +16,7 @@ export const FormWrapper = styled.div`
   ${props => props.theme.flexColumnSet()};
 
   & > header {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1em;
   }
@@ -25,7 +25,7 @@ export const FormWrapper = styled.div`
     margin: 0 auto;
 
     & > header {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 1em;
     }
   }
@@ -48,12 +48,12 @@ export const FormItem = styled.label`
 
   ${media.desktop} {
     & > div {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       margin-bottom: 0.5em;
     }
 
     & > input {
-      font-size: 1.5rem;
+      font-size: 1rem;
       margin-bottom: 3em;
     }
   }
@@ -87,7 +87,7 @@ export const FormBtn = styled.button<{ login?: boolean }>`
 
   ${media.desktop} {
     width: 19em;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     padding: 0.5em 0;
     margin-bottom: ${props => props.login && '1em'};
   }
@@ -133,11 +133,11 @@ export const ImageMainText = styled.div`
 
   ${media.desktop} {
     & > h2 {
-      font-size: 3rem;
+      font-size: 2.2rem;
     }
 
     & > p {
-      font-size: 1.3rem;
+      font-size: 1rem;
     }
   }
 `;
@@ -157,7 +157,7 @@ export const ImageSubText = styled.div`
 
   ${media.desktop} {
     & > p {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
   }
 `;
