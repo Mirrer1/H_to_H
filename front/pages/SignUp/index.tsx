@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import useInput from '@hooks/useInput';
 import { FormWrapper, Form, ImageMainText, FormError } from '@styles/login';
 import { SignupImage, SignupImageSubText, SignupFormItem, SignupFormBtn, AgreeCheck } from '@styles/signup';
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkPassword, setCheckPassword] = useState('');
-  const [userTerm, setUserTerm] = useState(false);
-  const [submit, setSubmit] = useState(false);
+  const [email, onChangeEmail] = useInput('');
+  const [nickname, onChangeNickname] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const [checkPassword, onChangeCheckPassword] = useInput('');
+  const [userTerm, onChangeUserTerm] = useInput(false);
 
+  const [submit, setSubmit] = useState(false);
   const [idError, setIdError] = useState(false);
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -38,26 +39,6 @@ const SignUp = () => {
       setSubmit(false);
     }
   }, [submit, idError, nicknameError, passwordError, termError]);
-
-  const onChangeEmail = useCallback(e => {
-    setEmail(e.target.value);
-  }, []);
-
-  const onChangeNickname = useCallback(e => {
-    setNickname(e.target.value);
-  }, []);
-
-  const onChangePassword = useCallback(e => {
-    setPassword(e.target.value);
-  }, []);
-
-  const onChangeCheckPassword = useCallback(e => {
-    setCheckPassword(e.target.value);
-  }, []);
-
-  const onChangeUserTerm = useCallback(e => {
-    setUserTerm(e.target.checked);
-  }, []);
 
   return (
     <FormWrapper>
