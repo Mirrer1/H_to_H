@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import media from '../media';
+import media from '@styles/media';
 
-export const LoginWrapper = styled.div`
+export const FormWrapper = styled.div`
   height: 100%;
   ${props => props.theme.flexColumnSet('space-between')};
 
@@ -10,7 +10,7 @@ export const LoginWrapper = styled.div`
   }
 `;
 
-export const FormWrapper = styled.div`
+export const Form = styled.div`
   text-align: center;
   margin: auto 0;
   ${props => props.theme.flexColumnSet()};
@@ -53,22 +53,23 @@ export const FormItem = styled.label`
     }
 
     & > input {
-      font-size: 1rem;
-      margin-bottom: 3em;
+      width: 18em;
+      font-size: 1.2rem;
     }
   }
 `;
 
-export const FormBtn = styled.button<{ login?: boolean }>`
+export const FormBtn = styled.button<{ mainBtn?: boolean }>`
   width: 15em;
   font-size: 0.8rem;
   border-radius: 15px;
   padding: 0.3em 0;
-  color: ${props => (props.login ? 'white' : '#707070')};
-  display: ${props => props.login && 'block'};
-  background-color: ${props => props.login && props.theme.colors.primary};
-  margin-bottom: ${props => props.login && '0.5em'};
-  border: ${props => props.login || '1px solid #bdbdbd'};
+  margin: auto;
+  color: ${props => (props.mainBtn ? 'white' : '#707070')};
+  display: ${props => props.mainBtn && 'block'};
+  background-color: ${props => props.mainBtn && props.theme.colors.primary};
+  margin-bottom: ${props => props.mainBtn && '0.5em'};
+  border: ${props => props.mainBtn || '1px solid #bdbdbd'};
   transition: opacity 300ms ease-in-out, box-shadow 150ms ease-in-out;
 
   &:hover {
@@ -89,11 +90,11 @@ export const FormBtn = styled.button<{ login?: boolean }>`
     width: 19em;
     font-size: 1.2rem;
     padding: 0.5em 0;
-    margin-bottom: ${props => props.login && '1em'};
+    margin-bottom: ${props => props.mainBtn && '1em'};
   }
 `;
 
-export const ImageWrapper = styled.div`
+export const FormImage = styled.div`
   position: relative;
   width: 100%;
   height: 60%;
