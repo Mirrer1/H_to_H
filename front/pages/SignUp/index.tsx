@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
 
 import useInput from '@hooks/useInput';
 import { FormWrapper, Form, ImageMainText, FormError } from '@styles/login';
@@ -35,8 +36,8 @@ const SignUp = () => {
 
   useEffect(() => {
     if (submit && !idError && !nicknameError && !passwordError && !termError) {
-      console.log('에러 없으니 회원가입 ㄱ');
       setSubmit(false);
+      console.log(email, nickname, password);
     }
   }, [submit, idError, nicknameError, passwordError, termError]);
 
