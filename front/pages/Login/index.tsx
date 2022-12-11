@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/pageStyle/login';
+import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/PageStyle/login';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');

@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import useInput from '@hooks/useInput';
-import Modal from '@components/Modal/signup';
-import { FormWrapper, Form, ImageMainText } from '@styles/pageStyle/login';
+import SuccessModal from '@components/Modal/Success';
+import ErrorModal from '@components/Modal/Error';
+import { FormWrapper, Form, ImageMainText } from '@styles/PageStyle/login';
 import {
   SignupImage,
   SignupImageSubText,
@@ -12,7 +13,7 @@ import {
   SignupFormBtn,
   AgreeCheck,
   FormError,
-} from '@styles/pageStyle/signup';
+} from '@styles/PageStyle/signup';
 
 const SignUp = () => {
   const [email, onChangeEmail] = useInput('');
@@ -26,6 +27,8 @@ const SignUp = () => {
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [termError, setTermError] = useState(false);
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [signupError, setSignupError] = useState('');
 
   const onSubmitForm = useCallback(
     e => {
@@ -46,6 +49,8 @@ const SignUp = () => {
   useEffect(() => {
     if (submit && !idError && !nicknameError && !passwordError && !termError) {
       setSubmit(false);
+      setSignupSuccess(false);
+      setSignupError('');
       axios
         .post('/api/users', {
           email,
@@ -54,10 +59,11 @@ const SignUp = () => {
         })
         .then(response => {
           console.log(response);
+          setSignupSuccess(true);
         })
         .catch(error => {
           console.log(error.response);
-          console.log(error.response.data);
+          setSignupError(error.response.data);
         });
       console.log(email, nickname, password);
     }
@@ -66,6 +72,8 @@ const SignUp = () => {
   const onChangeUserTerm = useCallback(() => {
     setUserTerm(prev => !prev);
   }, []);
+
+  console.log(`signupError 에러는 이것 ${signupError}`);
 
   return (
     <FormWrapper>
@@ -137,7 +145,9 @@ const SignUp = () => {
           </SignupFormBtn>
         </Link>
       </Form>
-      <Modal />
+
+      {signupSuccess && <SuccessModal />}
+      {signupError && <ErrorModal error={signupError} />}
     </FormWrapper>
   );
 };

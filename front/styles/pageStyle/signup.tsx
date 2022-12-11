@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import media from '@styles/media';
 
-import { FormBtn, FormImage, FormItem, ImageSubText } from '@styles/pageStyle/login';
+import { FormBtn, FormImage, FormItem, ImageSubText } from '@styles/PageStyle/login';
 
 export const SignupImage = styled(FormImage)`
   height: 40%;

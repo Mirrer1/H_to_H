@@ -6,6 +6,8 @@ declare module '@emotion/react' {
       primary: string;
       primaryLight: string;
       primaryDark: string;
+      success: string;
+      warning: string;
       error: string;
     };
     calcRem: (pxSize: number) => string;

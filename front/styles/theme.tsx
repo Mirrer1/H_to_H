@@ -5,6 +5,8 @@ const theme: Theme = {
     primary: '#b99976',
     primaryLight: '#d2b48c',
     primaryDark: '#987554',
+    success: '#a5d6a7',
+    warning: '#fff9c4',
     error: '#c62828',
   },
   calcRem: pxSize => {
