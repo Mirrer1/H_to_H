@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/login';
+import { Link } from 'react-router-dom';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
@@ -41,9 +42,11 @@ const LogIn = () => {
           <FormBtn type="submit" mainBtn>
             LOGIN
           </FormBtn>
-          <FormBtn>
-            SIGN UP for <span>H to H</span>
-          </FormBtn>
+          <Link to="/signup">
+            <FormBtn>
+              SIGN UP for <span>H to H</span>
+            </FormBtn>
+          </Link>
         </form>
       </Form>
 
