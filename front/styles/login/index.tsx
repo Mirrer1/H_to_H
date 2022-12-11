@@ -43,6 +43,7 @@ export const FormItem = styled.label`
     border: none;
     border-bottom: 1px solid #bdbdbd;
     outline: none;
+    margin-bottom: 2em;
   }
 
   ${media.desktop} {
@@ -158,17 +159,5 @@ export const ImageSubText = styled.div`
     & > p {
       font-size: 1.5rem;
     }
-  }
-`;
-
-export const FormError = styled.div<{ error?: boolean }>`
-  font-size: 0.5rem;
-  font-weight: 700;
-  margin-bottom: 1em;
-  visibility: ${props => (props.error ? 'visible' : 'hidden')};
-  color: ${props => props.theme.colors.error};
-
-  ${media.desktop} {
-    font-size: 0.8rem;
   }
 `;
