@@ -11,8 +11,8 @@ const SignUp = () => {
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [checkPassword, onChangeCheckPassword] = useInput('');
-  const [userTerm, onChangeUserTerm] = useInput(false);
 
+  const [userTerm, setUserTerm] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [idError, setIdError] = useState(false);
   const [nicknameError, setNicknameError] = useState(false);
@@ -54,6 +54,10 @@ const SignUp = () => {
       console.log(email, nickname, password);
     }
   }, [submit, idError, nicknameError, passwordError, termError]);
+
+  const onChangeUserTerm = useCallback(() => {
+    setUserTerm(prev => !prev);
+  }, []);
 
   return (
     <FormWrapper>
