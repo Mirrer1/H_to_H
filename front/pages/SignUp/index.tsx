@@ -38,6 +38,19 @@ const SignUp = () => {
   useEffect(() => {
     if (submit && !idError && !nicknameError && !passwordError && !termError) {
       setSubmit(false);
+      axios
+        .post('/api/users', {
+          email,
+          nickname,
+          password,
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error.response);
+          console.log(error.response.data);
+        });
       console.log(email, nickname, password);
     }
   }, [submit, idError, nicknameError, passwordError, termError]);
