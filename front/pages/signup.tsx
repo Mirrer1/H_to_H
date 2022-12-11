@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import useInput from '@hooks/useInput';
-import { FormWrapper, Form, ImageMainText } from '@styles/login';
-import { SignupImage, SignupImageSubText, SignupFormItem, SignupFormBtn, AgreeCheck, FormError } from '@styles/signup';
+import Modal from '@components/Modal/signup';
+import { FormWrapper, Form, ImageMainText } from '@styles/pageStyle/login';
+import {
+  SignupImage,
+  SignupImageSubText,
+  SignupFormItem,
+  SignupFormBtn,
+  AgreeCheck,
+  FormError,
+} from '@styles/pageStyle/signup';
 
 const SignUp = () => {
   const [email, onChangeEmail] = useInput('');
@@ -129,6 +137,7 @@ const SignUp = () => {
           </SignupFormBtn>
         </Link>
       </Form>
+      <Modal />
     </FormWrapper>
   );
 };
