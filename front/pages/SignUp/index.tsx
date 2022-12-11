@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import useInput from '@hooks/useInput';
@@ -105,9 +106,11 @@ const SignUp = () => {
             SIGN UP
           </SignupFormBtn>
         </form>
-        <SignupFormBtn>
-          이미 회원이신가요? <span>로그인 하러가기</span>
-        </SignupFormBtn>
+        <Link to="/login">
+          <SignupFormBtn>
+            이미 회원이신가요? <span>로그인 하러가기</span>
+          </SignupFormBtn>
+        </Link>
       </Form>
     </FormWrapper>
   );
