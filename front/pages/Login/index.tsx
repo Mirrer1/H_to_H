@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 
@@ -37,6 +37,10 @@ const LogIn = () => {
     },
     [email, password],
   );
+
+  if (data) {
+    return <Redirect to="/workspace/channel" />;
+  }
 
   return (
     <FormWrapper>
