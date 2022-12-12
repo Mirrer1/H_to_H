@@ -1,12 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import useSWR from 'swr';
 
 import useInput from '@hooks/useInput';
+import fetcher from '@utils/fetcher';
 import ErrorModal from '@components/Modal/Error';
 import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/PageStyle/login';
 
 const LogIn = () => {
+  const { data, error, revalidate } = useSWR('http://localhost:3095/api/users', fetcher);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [loginError, setLoginError] = useState('');
@@ -16,8 +19,15 @@ const LogIn = () => {
       e.preventDefault();
       setLoginError('');
       axios
-        .post('http://localhost:3095/api/users/login', { email, password })
+        .post(
+          'http://localhost:3095/api/users/login',
+          { email, password },
+          {
+            withCredentials: true,
+          },
+        )
         .then(() => {
+          revalidate();
           console.log('로그인 성공');
         })
         .catch(error => {
