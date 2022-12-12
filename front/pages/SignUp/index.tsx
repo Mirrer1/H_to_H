@@ -143,6 +143,7 @@ const SignUp = () => {
           </SignupFormBtn>
         </Link>
       </Form>
+
       {signupSuccess && <SuccessModal />}
       {signupError && <ErrorModal error={signupError} />}
     </FormWrapper>
