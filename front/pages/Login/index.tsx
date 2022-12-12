@@ -9,7 +9,7 @@ import ErrorModal from '@components/Modal/Error';
 import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/PageStyle/login';
 
 const LogIn = () => {
-  const { data, error, revalidate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [loginError, setLoginError] = useState('');
@@ -26,9 +26,8 @@ const LogIn = () => {
             withCredentials: true,
           },
         )
-        .then(() => {
-          revalidate();
-          console.log('로그인 성공');
+        .then(response => {
+          mutate(response.data, false);
         })
         .catch(error => {
           console.log(error.response);
