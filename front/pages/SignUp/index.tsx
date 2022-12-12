@@ -73,8 +73,6 @@ const SignUp = () => {
     setUserTerm(prev => !prev);
   }, []);
 
-  console.log(`signupError 에러는 이것 ${signupError}`);
-
   return (
     <FormWrapper>
       <SignupImage>
