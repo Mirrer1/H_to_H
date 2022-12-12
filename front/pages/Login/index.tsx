@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import useInput from '@hooks/useInput';
 import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/PageStyle/login';
 
 const LogIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, onChangeEmail] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const [loginError, setLoginError] = useState('');
 
   const onSubmitForm = useCallback(
     e => {
@@ -14,14 +16,6 @@ const LogIn = () => {
     },
     [email, password],
   );
-
-  const onChangeEmail = useCallback(e => {
-    setEmail(e.target.value);
-  }, []);
-
-  const onChangePassword = useCallback(e => {
-    setPassword(e.target.value);
-  }, []);
 
   return (
     <FormWrapper>
