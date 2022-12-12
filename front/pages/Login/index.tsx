@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import useInput from '@hooks/useInput';
+import ErrorModal from '@components/Modal/Error';
 import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/PageStyle/login';
 
 const LogIn = () => {
@@ -12,7 +14,16 @@ const LogIn = () => {
   const onSubmitForm = useCallback(
     e => {
       e.preventDefault();
-      console.log(email, password);
+      setLoginError('');
+      axios
+        .post('http://localhost:3095/api/users/login', { email, password })
+        .then(() => {
+          console.log('로그인 성공');
+        })
+        .catch(error => {
+          console.log(error.response);
+          setLoginError(error.response.data);
+        });
     },
     [email, password],
   );
@@ -57,6 +68,8 @@ const LogIn = () => {
           <p>Made by Mirrer</p>
         </ImageSubText>
       </FormImage>
+
+      {loginError && <ErrorModal error={loginError} />}
     </FormWrapper>
   );
 };
