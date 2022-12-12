@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import media from '@styles/media';
 
 export const SuccessWrapper = styled.div<{ visible?: boolean }>`
   width: 20em;
@@ -28,6 +29,22 @@ export const SuccessWrapper = styled.div<{ visible?: boolean }>`
     font-size: 0.7rem;
     margin-bottom: 2em;
   }
+
+  ${media.desktop} {
+    width: 25em;
+
+    & > .fa-circle-check {
+      font-size: 6em;
+    }
+
+    & > header {
+      font-size: 1.5rem;
+    }
+
+    & > div {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const SuccessBtn = styled.button`
@@ -45,5 +62,9 @@ export const SuccessBtn = styled.button`
   &:active {
     opacity: 1;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+
+  ${media.desktop} {
+    font-size: 1rem;
   }
 `;
