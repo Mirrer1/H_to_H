@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
-import { ErrorWrapper, ErrorBtn } from '@styles/componentsStyle/Modal/error';
+import { ErrorWrapper, ErrorBtn } from '@styles/ComponentsStyle/Modal/error';
 
 interface propsType {
   error: string;

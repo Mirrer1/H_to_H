@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
-import { SuccessWrapper, SuccessBtn } from '@styles/componentsStyle/Modal/success';
+import { SuccessWrapper, SuccessBtn } from '@styles/ComponentsStyle/Modal/success';
 
 const SuccessModal = () => {
   return (
