@@ -55,7 +55,7 @@ const SignUp = () => {
       setSignupSuccess(false);
       setSignupError('');
       axios
-        .post('/api/users', {
+        .post('http://localhost:3095/api/users', {
           email,
           nickname,
           password,
@@ -65,7 +65,7 @@ const SignUp = () => {
           setSignupSuccess(true);
         })
         .catch(error => {
-          console.log(error.response);
+          console.log(error.response.data);
           setSignupError(error.response.data);
         });
       console.log(email, nickname, password);
