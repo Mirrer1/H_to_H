@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Redirect, Switch, Route } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
@@ -11,17 +11,21 @@ import loadable from '@loadable/component';
 import fetcher from '@utils/fetcher';
 import {
   Container,
+  // DesktopWorkspace,
   Header,
   SearchWrapper,
   Search,
+  WorkSpaceWrapper,
   WorkSpace,
   WorkSpaceItem,
   Menu,
+  MenuItem,
   Channels,
   ChannelItem,
   DM,
   DMItem,
   Footer,
+  SwitchWrapper,
 } from '@styles/LayoutsStyle/workspace';
 
 const Channel = loadable(() => import('@pages/channel'));
@@ -29,6 +33,8 @@ const Message = loadable(() => import('@pages/message'));
 
 const Workspace: FC = ({ children }) => {
   const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const [channelToggle, setChannelToggle] = useState(false);
+  const [dmToggle, setDMToggle] = useState(false);
 
   const onLogout = useCallback(() => {
     axios
@@ -40,6 +46,14 @@ const Workspace: FC = ({ children }) => {
       });
   }, []);
 
+  const onClickChannel = useCallback(() => {
+    setChannelToggle(prev => !prev);
+  }, []);
+
+  const onClickDM = useCallback(() => {
+    setDMToggle(prev => !prev);
+  }, []);
+
   if (!data) {
     return <Redirect to="/login" />;
   }
@@ -47,143 +61,138 @@ const Workspace: FC = ({ children }) => {
   return (
     <Container>
       {/* <button onClick={onLogout}>로그아웃</button> */}
-      <div>
-        <Header>
-          <header>H to H</header>
-          <button>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt={data.nickname} />
-          </button>
-        </Header>
-        <SearchWrapper>
-          <Search id="search-label">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-            <input type="text" placeholder="Search messages or users" />
-          </Search>
-        </SearchWrapper>
 
+      <Header>
+        <header>H to H</header>
+        <button>
+          <img src={gravatar.url(data.email, { d: 'mm' })} alt={data.nickname} />
+        </button>
+      </Header>
+
+      <SearchWrapper>
+        <Search id="search-label">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <input type="text" placeholder="Search messages or users" />
+        </Search>
+      </SearchWrapper>
+
+      <WorkSpaceWrapper>
         <WorkSpace>
-          <button>
-            <WorkSpaceItem>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-              <p>Name1</p>
-            </WorkSpaceItem>
-          </button>
-
-          <button>
-            <WorkSpaceItem>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-              <p>Name2</p>
-            </WorkSpaceItem>
-          </button>
-
-          <button>
-            <WorkSpaceItem>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-              <p>Name3</p>
-            </WorkSpaceItem>
-          </button>
-
-          <button>
-            <FontAwesomeIcon icon={faSquarePlus} />
-          </button>
+          <WorkSpaceItem>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
+            <p>Name1</p>
+          </WorkSpaceItem>
         </WorkSpace>
 
-        <Menu>
-          <button>
-            <div>@</div>
-            <p>Threads</p>
-          </button>
-          <button>
-            <div>@</div>
-            <p>Mentions & reactions</p>
-          </button>
-          <button>
-            <div>@</div>
-            <p>Saved Items</p>
-          </button>
-          <button>
-            <div>:</div>
-            <p>More</p>
-          </button>
-        </Menu>
+        <WorkSpace>
+          <WorkSpaceItem>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
+            <p>Name2</p>
+          </WorkSpaceItem>
+        </WorkSpace>
 
-        <Channels>
-          <button>
-            <div>
-              <FontAwesomeIcon icon={faAngleDown} />
-            </div>
-            <p>Channels</p>
-          </button>
+        <WorkSpace>
+          <WorkSpaceItem>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
+            <p>Name3</p>
+          </WorkSpaceItem>
+        </WorkSpace>
 
-          <ChannelItem>
-            <button>
-              <div>#</div>
-              <p>일반</p>
-            </button>
+        <WorkSpace>
+          <FontAwesomeIcon icon={faSquarePlus} />
+        </WorkSpace>
+      </WorkSpaceWrapper>
 
-            <button>
-              <div>
-                <FontAwesomeIcon icon={faSquarePlus} />
-              </div>
-              <p>Add channels</p>
-            </button>
-          </ChannelItem>
-        </Channels>
+      <Menu>
+        <MenuItem>
+          <div>@</div>
+          <p>Threads</p>
+        </MenuItem>
+        <MenuItem>
+          <div>@</div>
+          <p>Mentions & reactions</p>
+        </MenuItem>
+        <MenuItem>
+          <div>@</div>
+          <p>Saved Items</p>
+        </MenuItem>
+        <MenuItem>
+          <div>:</div>
+          <p>More</p>
+        </MenuItem>
+      </Menu>
 
-        <DM>
-          <button>
-            <div>
-              <FontAwesomeIcon icon={faAngleDown} />
-            </div>
-            <p>Direct message</p>
-          </button>
+      <Channels>
+        <ChannelItem onClick={onClickChannel}>
+          <div>
+            <FontAwesomeIcon icon={faAngleDown} />
+          </div>
+          <p>Channels</p>
+        </ChannelItem>
 
-          <DMItem>
-            <button>
-              <div>
-                <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
-              </div>
-              <p>Slackbot</p>
-            </button>
-            <button>
-              <div>
-                <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
-              </div>
-              <p>zerocho</p>
-            </button>
-            <button>
-              <div>
-                <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
-              </div>
-              <p>zerocho1</p>
-            </button>
-            <button>
-              <div>
-                <FontAwesomeIcon icon={faSquarePlus} />
-              </div>
-              <p>Add teammates</p>
-            </button>
-          </DMItem>
-        </DM>
+        <ChannelItem channelToggle={channelToggle}>
+          <div>#</div>
+          <p>일반</p>
+        </ChannelItem>
 
-        <Footer>
-          <button>
-            <div>
-              <FontAwesomeIcon icon={faAngleUp} />
-            </div>
-            <span>NodeJS KR Developer Group</span>
-          </button>
+        <ChannelItem channelToggle={channelToggle}>
+          <div>
+            <FontAwesomeIcon icon={faSquarePlus} />
+          </div>
+          <p>Add channels</p>
+        </ChannelItem>
+      </Channels>
 
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </Footer>
-      </div>
+      <DM>
+        <DMItem onClick={onClickDM}>
+          <div>
+            <FontAwesomeIcon icon={faAngleDown} />
+          </div>
+          <p>Direct message</p>
+        </DMItem>
 
-      <div>
+        <DMItem dmToggle={dmToggle}>
+          <div>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+          </div>
+          <p>Slackbot</p>
+        </DMItem>
+        <DMItem dmToggle={dmToggle}>
+          <div>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+          </div>
+          <p>zerocho</p>
+        </DMItem>
+        <DMItem dmToggle={dmToggle}>
+          <div>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+          </div>
+          <p>zerocho1</p>
+        </DMItem>
+        <DMItem dmToggle={dmToggle}>
+          <div>
+            <FontAwesomeIcon icon={faSquarePlus} />
+          </div>
+          <p>Add teammates</p>
+        </DMItem>
+      </DM>
+
+      <Footer>
+        <button>
+          <div>
+            <FontAwesomeIcon icon={faAngleUp} />
+          </div>
+          <span>NodeJS KR Developer Group</span>
+        </button>
+        <FontAwesomeIcon icon={faPenToSquare} />
+      </Footer>
+
+      <SwitchWrapper>
         <Switch>
           <Route path="/workspace/channel" component={Channel} />
           <Route path="/workspace/message" component={Message} />
         </Switch>
-      </div>
+      </SwitchWrapper>
     </Container>
   );
 };

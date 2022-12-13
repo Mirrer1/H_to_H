@@ -6,9 +6,17 @@ export const Container = styled.div`
   background-color: #f0e9d2;
 `;
 
-export const Header = styled.div`
-  padding: 1.5em 1em;
+// export const DesktopWorkspace = styled.div`
+//   display: none;
 
+//   ${media.desktop} {
+//     display: block;
+//   }
+// `;
+
+export const Header = styled.div`
+  width: 100%;
+  padding: 1em 1.5em;
   ${props => props.theme.flexSet('space-between')};
 
   & > header {
@@ -19,10 +27,20 @@ export const Header = styled.div`
 
   & > button > img {
     width: 2.5em;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  & > button > img:hover {
+    opacity: 40%;
+  }
+
+  & > button > img:active {
+    opacity: 100%;
   }
 `;
 
 export const SearchWrapper = styled.div`
+  width: 100%;
   padding: 0 1em;
 `;
 
@@ -51,40 +69,43 @@ export const Search = styled.label`
   }
 `;
 
-export const WorkSpace = styled.div`
+export const WorkSpaceWrapper = styled.div`
+  width: 100%;
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 1px solid white;
   ${props => props.theme.flexSet('space-around')};
 
-  & > button {
-    position: relative;
-    width: 4em;
-    height: 3em;
-    background-color: #e6ddc4;
-    border-radius: 0.4rem;
-    ${props => props.theme.flexColumnSet()};
+  ${media.desktop} {
+    display: none;
+  }
+`;
+
+export const WorkSpace = styled.button`
+  position: relative;
+  width: 4em;
+  height: 3em;
+  background-color: #e6ddc4;
+  border-radius: 0.4rem;
+  transition: opacity 300ms ease-in-out;
+
+  & > .fa-square-plus {
+    font-size: 1.2rem;
   }
 
-  & > button > .fa-square-plus {
-    font-size: 1.5rem;
-    transition: opacity 300ms ease-in-out;
-  }
-
-  & > button > .fa-square-plus:hover {
+  &:hover {
     opacity: 40%;
   }
 
-  & > button > .fa-square-plus:active {
+  &:active {
     opacity: 100%;
   }
 `;
 
 export const WorkSpaceItem = styled.div`
-  z-index: 5;
   position: absolute;
   top: -50%;
-  transition: opacity 300ms ease-in-out;
+  transform: translateX(25%);
 
   & > img {
     width: 2.5em;
@@ -97,6 +118,18 @@ export const WorkSpaceItem = styled.div`
     margin-top: 0.3em;
     opacity: 70%;
   }
+`;
+
+export const Menu = styled.div`
+  padding-left: 1em;
+  margin-bottom: 1em;
+`;
+
+export const MenuItem = styled.button`
+  width: 100%;
+  font-size: 1rem;
+  transition: opacity 300ms ease-in-out;
+  ${props => props.theme.flexSet('start')};
 
   &:hover {
     opacity: 40%;
@@ -105,100 +138,42 @@ export const WorkSpaceItem = styled.div`
   &:active {
     opacity: 100%;
   }
-`;
 
-export const Menu = styled.div`
-  padding-left: 1em;
-  margin-bottom: 1em;
-
-  ${props => props.theme.flexColumnSet('center', 'start')};
-
-  & > button {
-    font-size: 1rem;
-    transition: opacity 300ms ease-in-out;
-    ${props => props.theme.flexSet()};
+  &:focus {
+    background-color: #e6ddc4;
   }
 
-  & > button > div {
+  & > div {
     width: 2em;
   }
 
-  & > button > p {
+  & > p {
     font-weight: 700;
   }
+`;
 
-  & > button:hover {
-    opacity: 40%;
-  }
+export const Channels = styled(Menu)``;
 
-  & > button:active {
-    opacity: 100%;
+export const ChannelItem = styled(MenuItem)<{ channelToggle?: boolean }>`
+  display: ${props => props.channelToggle && 'none'};
+  margin-left: 1em;
+
+  &:first-child {
+    margin-left: 0;
   }
 `;
 
-export const Channels = styled.div`
-  padding-left: 1em;
-  margin-bottom: 1em;
-  ${props => props.theme.flexColumnSet('center', 'start')};
-
-  & > button {
-    font-size: 1rem;
-    transition: opacity 300ms ease-in-out;
-    ${props => props.theme.flexSet()};
-  }
-
-  & > button > div {
-    width: 2em;
-  }
-
-  & > button > p {
-    font-weight: 700;
-  }
-
-  & > button:hover {
-    opacity: 40%;
-  }
-
-  & > button:active {
-    opacity: 100%;
-  }
-`;
-
-export const ChannelItem = styled.div`
-  & > button {
-    margin-left: 1em;
-    transition: opacity 300ms ease-in-out;
-    ${props => props.theme.flexSet()};
-  }
-
-  & > button > div {
-    width: 2em;
-  }
-
-  & > button:hover {
-    opacity: 40%;
-  }
-
-  & > button:active {
-    opacity: 100%;
-  }
-`;
-
-export const DM = styled(Channels)`
-  padding-left: 1em;
-`;
-
-export const DMItem = styled(ChannelItem)`
-  & > button > div {
-    margin: 0 0.5em 0.2em 0;
-  }
+export const DM = styled(Menu)``;
+export const DMItem = styled(ChannelItem)<{ dmToggle?: boolean }>`
+  display: ${props => props.dmToggle && 'none'};
+  margin-bottom: 0.3em;
 `;
 
 export const Footer = styled.div`
+  width: 100%;
   padding: 1em;
   position: absolute;
   bottom: 0%;
-  width: 100%;
   background-color: white;
   border-top: 1px solid #e6ddc4;
   ${props => props.theme.flexSet('space-between')};
@@ -233,4 +208,8 @@ export const Footer = styled.div`
   & > .fa-pen-to-square:active {
     opacity: 100%;
   }
+`;
+
+export const SwitchWrapper = styled.div`
+  display: none;
 `;
