@@ -26,7 +26,7 @@ export const CreateXBtn = styled.button`
 export const CreateForm = styled(Form)``;
 export const CreateFormItem = styled(FormItem)`
   & > div {
-    font-size: 1.2rem;
+    font-size: 1rem;
     opacity: 70%;
   }
 
@@ -34,7 +34,21 @@ export const CreateFormItem = styled(FormItem)`
     width: 12em;
     font-size: 1rem;
   }
+
+  ${media.desktop} {
+    & > div {
+      font-size: 1.2rem;
+    }
+
+    & > input {
+      font-size: 1.2rem;
+    }
+  }
 `;
 export const CreateFormBtn = styled(FormBtn)`
   width: 10em;
+
+  ${media.desktop} {
+    width: 15em;
+  }
 `;
