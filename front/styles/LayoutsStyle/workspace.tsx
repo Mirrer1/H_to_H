@@ -119,13 +119,14 @@ export const WorkSpace = styled.button`
 `;
 
 export const WorkSpaceItem = styled.div`
+  width: 3em;
+  height: 2em;
   position: absolute;
-  top: -60%;
-  transform: translateX(10%);
+  top: -50%;
+  transform: translateX(15%);
 
   & > h2 {
     font-size: 1.5rem;
-    padding: 0.3em 0.8em;
     background-color: white;
     margin-bottom: 0.1em;
   }
