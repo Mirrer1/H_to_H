@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import { Redirect, Switch, Route } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faAngleDown, faAngleRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -11,7 +11,7 @@ import loadable from '@loadable/component';
 import fetcher from '@utils/fetcher';
 import {
   Container,
-  // DesktopWorkspace,
+  Sidebar,
   Header,
   SearchWrapper,
   Search,
@@ -25,6 +25,7 @@ import {
   DM,
   DMItem,
   Footer,
+  DesktopWorkspace,
   SwitchWrapper,
 } from '@styles/LayoutsStyle/workspace';
 
@@ -35,6 +36,7 @@ const Workspace: FC = ({ children }) => {
   const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
   const [channelToggle, setChannelToggle] = useState(false);
   const [dmToggle, setDMToggle] = useState(false);
+  const [pageVisible, setPageVisible] = useState(false);
 
   const onLogout = useCallback(() => {
     axios
@@ -54,6 +56,14 @@ const Workspace: FC = ({ children }) => {
     setDMToggle(prev => !prev);
   }, []);
 
+  const onClickPage = useCallback(() => {
+    setPageVisible(true);
+  }, []);
+
+  const onClickReturnPage = useCallback(() => {
+    setPageVisible(false);
+  }, []);
+
   if (!data) {
     return <Redirect to="/login" />;
   }
@@ -62,21 +72,129 @@ const Workspace: FC = ({ children }) => {
     <Container>
       {/* <button onClick={onLogout}>로그아웃</button> */}
 
-      <Header>
-        <header>H to H</header>
-        <button>
-          <img src={gravatar.url(data.email, { d: 'mm' })} alt={data.nickname} />
-        </button>
-      </Header>
+      <Sidebar pageVisible={pageVisible}>
+        <Header>
+          <header>H to H</header>
+          <button>
+            <img src={gravatar.url(data.email, { d: 'mm' })} alt={data.nickname} />
+          </button>
+        </Header>
 
-      <SearchWrapper>
-        <Search id="search-label">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-          <input type="text" placeholder="Search messages or users" />
-        </Search>
-      </SearchWrapper>
+        <SearchWrapper>
+          <Search id="search-label">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <input type="text" placeholder="Search messages or users" />
+          </Search>
+        </SearchWrapper>
 
-      <WorkSpaceWrapper>
+        <WorkSpaceWrapper>
+          <WorkSpace>
+            <WorkSpaceItem>
+              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
+              <p>Name1</p>
+            </WorkSpaceItem>
+          </WorkSpace>
+
+          <WorkSpace>
+            <WorkSpaceItem>
+              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
+              <p>Name2</p>
+            </WorkSpaceItem>
+          </WorkSpace>
+
+          <WorkSpace>
+            <WorkSpaceItem>
+              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
+              <p>Name3</p>
+            </WorkSpaceItem>
+          </WorkSpace>
+
+          <WorkSpace>
+            <FontAwesomeIcon icon={faSquarePlus} />
+          </WorkSpace>
+        </WorkSpaceWrapper>
+
+        <Menu>
+          <MenuItem>
+            <div>@</div>
+            <p>Threads</p>
+          </MenuItem>
+          <MenuItem>
+            <div>@</div>
+            <p>Mentions & reactions</p>
+          </MenuItem>
+          <MenuItem>
+            <div>@</div>
+            <p>Saved Items</p>
+          </MenuItem>
+          <MenuItem>
+            <div>:</div>
+            <p>More</p>
+          </MenuItem>
+        </Menu>
+
+        <Channels>
+          <ChannelItem onClick={onClickChannel}>
+            <div>
+              {channelToggle ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleDown} />}
+            </div>
+            <p>Channels</p>
+          </ChannelItem>
+
+          <ChannelItem channelToggle={channelToggle} onClick={onClickPage}>
+            <div>#</div>
+            <p>일반</p>
+          </ChannelItem>
+
+          <ChannelItem channelToggle={channelToggle}>
+            <div>
+              <FontAwesomeIcon icon={faSquarePlus} />
+            </div>
+            <p>Add channels</p>
+          </ChannelItem>
+        </Channels>
+
+        <DM>
+          <DMItem onClick={onClickDM}>
+            <div>{dmToggle ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleDown} />}</div>
+            <p>Direct message</p>
+          </DMItem>
+
+          <DMItem dmToggle={dmToggle}>
+            <div>
+              <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+            </div>
+            <p>Slackbot</p>
+          </DMItem>
+          <DMItem dmToggle={dmToggle}>
+            <div>
+              <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+            </div>
+            <p>zerocho</p>
+          </DMItem>
+          <DMItem dmToggle={dmToggle}>
+            <div>
+              <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+            </div>
+            <p>zerocho1</p>
+          </DMItem>
+          <DMItem dmToggle={dmToggle}>
+            <div>
+              <FontAwesomeIcon icon={faSquarePlus} />
+            </div>
+            <p>Add teammates</p>
+          </DMItem>
+        </DM>
+
+        <Footer>
+          <div>NodeJS KR Developer Group</div>
+          <button>
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </button>
+        </Footer>
+      </Sidebar>
+
+      <DesktopWorkspace>
         <WorkSpace>
           <WorkSpaceItem>
             <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
@@ -101,93 +219,12 @@ const Workspace: FC = ({ children }) => {
         <WorkSpace>
           <FontAwesomeIcon icon={faSquarePlus} />
         </WorkSpace>
-      </WorkSpaceWrapper>
+      </DesktopWorkspace>
 
-      <Menu>
-        <MenuItem>
-          <div>@</div>
-          <p>Threads</p>
-        </MenuItem>
-        <MenuItem>
-          <div>@</div>
-          <p>Mentions & reactions</p>
-        </MenuItem>
-        <MenuItem>
-          <div>@</div>
-          <p>Saved Items</p>
-        </MenuItem>
-        <MenuItem>
-          <div>:</div>
-          <p>More</p>
-        </MenuItem>
-      </Menu>
-
-      <Channels>
-        <ChannelItem onClick={onClickChannel}>
-          <div>
-            <FontAwesomeIcon icon={faAngleDown} />
-          </div>
-          <p>Channels</p>
-        </ChannelItem>
-
-        <ChannelItem channelToggle={channelToggle}>
-          <div>#</div>
-          <p>일반</p>
-        </ChannelItem>
-
-        <ChannelItem channelToggle={channelToggle}>
-          <div>
-            <FontAwesomeIcon icon={faSquarePlus} />
-          </div>
-          <p>Add channels</p>
-        </ChannelItem>
-      </Channels>
-
-      <DM>
-        <DMItem onClick={onClickDM}>
-          <div>
-            <FontAwesomeIcon icon={faAngleDown} />
-          </div>
-          <p>Direct message</p>
-        </DMItem>
-
-        <DMItem dmToggle={dmToggle}>
-          <div>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
-          </div>
-          <p>Slackbot</p>
-        </DMItem>
-        <DMItem dmToggle={dmToggle}>
-          <div>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
-          </div>
-          <p>zerocho</p>
-        </DMItem>
-        <DMItem dmToggle={dmToggle}>
-          <div>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
-          </div>
-          <p>zerocho1</p>
-        </DMItem>
-        <DMItem dmToggle={dmToggle}>
-          <div>
-            <FontAwesomeIcon icon={faSquarePlus} />
-          </div>
-          <p>Add teammates</p>
-        </DMItem>
-      </DM>
-
-      <Footer>
-        <button>
-          <div>
-            <FontAwesomeIcon icon={faAngleUp} />
-          </div>
-          <span>NodeJS KR Developer Group</span>
+      <SwitchWrapper pageVisible={pageVisible}>
+        <button onClick={onClickReturnPage}>
+          <FontAwesomeIcon icon={faChevronLeft} />
         </button>
-        <FontAwesomeIcon icon={faPenToSquare} />
-      </Footer>
-
-      <SwitchWrapper>
         <Switch>
           <Route path="/workspace/channel" component={Channel} />
           <Route path="/workspace/message" component={Message} />

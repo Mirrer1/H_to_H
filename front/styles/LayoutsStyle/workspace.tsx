@@ -4,15 +4,22 @@ import media from '@styles/media';
 export const Container = styled.div`
   height: 100%;
   background-color: #f0e9d2;
+
+  ${media.desktop} {
+    ${props => props.theme.flexSet('start')};
+  }
 `;
 
-// export const DesktopWorkspace = styled.div`
-//   display: none;
+export const Sidebar = styled.div<{ pageVisible?: boolean }>`
+  display: ${props => props.pageVisible && 'none'};
 
-//   ${media.desktop} {
-//     display: block;
-//   }
-// `;
+  ${media.desktop} {
+    position: relative;
+    height: 100%;
+    order: 2;
+    display: block;
+  }
+`;
 
 export const Header = styled.div`
   width: 100%;
@@ -42,6 +49,11 @@ export const Header = styled.div`
 export const SearchWrapper = styled.div`
   width: 100%;
   padding: 0 1em;
+  margin-bottom: 3em;
+
+  ${media.desktop} {
+    margin-bottom: 1em;
+  }
 `;
 
 export const Search = styled.label`
@@ -50,7 +62,6 @@ export const Search = styled.label`
   background-color: #e6ddc4;
   border-radius: 0.4rem;
   padding: 0.5em;
-  margin-bottom: 3em;
 
   & > .fa-magnifying-glass {
     opacity: 50%;
@@ -100,6 +111,10 @@ export const WorkSpace = styled.button`
   &:active {
     opacity: 100%;
   }
+
+  ${media.desktop} {
+    margin-bottom: 2.5em;
+  }
 `;
 
 export const WorkSpaceItem = styled.div`
@@ -114,7 +129,7 @@ export const WorkSpaceItem = styled.div`
 
   & > p {
     font-size: 0.8rem;
-    font-weight: 700;
+
     margin-top: 0.3em;
     opacity: 70%;
   }
@@ -146,27 +161,27 @@ export const MenuItem = styled.button`
   & > div {
     width: 2em;
   }
-
-  & > p {
-    font-weight: 700;
-  }
 `;
 
 export const Channels = styled(Menu)``;
 
 export const ChannelItem = styled(MenuItem)<{ channelToggle?: boolean }>`
   display: ${props => props.channelToggle && 'none'};
-  margin-left: 1em;
+  padding-left: 1em;
 
   &:first-child {
-    margin-left: 0;
+    padding-left: 0;
   }
 `;
 
 export const DM = styled(Menu)``;
 export const DMItem = styled(ChannelItem)<{ dmToggle?: boolean }>`
   display: ${props => props.dmToggle && 'none'};
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
+
+  & > div {
+    margin-right: 0.5em;
+  }
 `;
 
 export const Footer = styled.div`
@@ -178,19 +193,15 @@ export const Footer = styled.div`
   border-top: 1px solid #e6ddc4;
   ${props => props.theme.flexSet('space-between')};
 
+  & > div {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
   & > button {
     font-size: 1.2rem;
     transition: opacity 300ms ease-in-out;
     ${props => props.theme.flexSet()};
-  }
-
-  & > button > div {
-    margin-right: 0.5em;
-  }
-
-  & > .fa-pen-to-square {
-    transition: opacity 300ms ease-in-out;
-    font-size: 1.5rem;
   }
 
   & > button:hover {
@@ -201,15 +212,45 @@ export const Footer = styled.div`
     opacity: 100%;
   }
 
-  & > .fa-pen-to-square:hover {
-    opacity: 40%;
-  }
+  ${media.desktop} {
+    padding: 1em 0.5em;
+    border-right: 1px solid #f0e9d2;
 
-  & > .fa-pen-to-square:active {
-    opacity: 100%;
+    & > div {
+      font-size: 0.8rem;
+    }
+
+    & > button {
+      font-size: 1rem;
+    }
   }
 `;
 
-export const SwitchWrapper = styled.div`
+export const DesktopWorkspace = styled.div`
   display: none;
+
+  ${media.desktop} {
+    order: 1;
+    height: 100%;
+    background-color: #f0e9d2;
+    border-right: 1px solid white;
+    padding: 0 1em;
+    ${props => props.theme.flexColumnSet()};
+  }
+`;
+
+export const SwitchWrapper = styled.div<{ pageVisible?: boolean }>`
+  height: 100%;
+  background-color: white;
+  display: ${props => props.pageVisible || 'none'};
+
+  ${media.desktop} {
+    display: block;
+    width: 100%;
+    order: 3;
+
+    & > button {
+      display: none;
+    }
+  }
 `;
