@@ -45,10 +45,6 @@ export const Header = styled.div`
   & > button > img:active {
     opacity: 100%;
   }
-
-  ${media.desktop} {
-    padding: 1em 2.5em;
-  }
 `;
 
 export const SearchWrapper = styled.div`
@@ -124,18 +120,18 @@ export const WorkSpace = styled.button`
 
 export const WorkSpaceItem = styled.div`
   position: absolute;
-  top: -50%;
-  transform: translateX(25%);
+  top: -60%;
+  transform: translateX(10%);
 
-  & > img {
-    width: 2.5em;
-    margin: auto;
+  & > h2 {
+    font-size: 1.5rem;
+    padding: 0.3em 0.8em;
+    background-color: white;
+    margin-bottom: 0.1em;
   }
 
   & > p {
     font-size: 0.8rem;
-
-    margin-top: 0.3em;
     opacity: 70%;
   }
 `;

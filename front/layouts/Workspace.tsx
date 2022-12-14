@@ -1,15 +1,17 @@
 import React, { FC, useCallback, useState } from 'react';
-import { Redirect, Switch, Route } from 'react-router';
+import { Redirect } from 'react-router';
+import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faAngleDown, faAngleRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import useSWR from 'swr';
-import axios from 'axios';
 import gravatar from 'gravatar';
 import loadable from '@loadable/component';
 
+import { IUser } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import Profile from '@components/Modal/Profile';
+import CreateWorkspace from '@components/Modal/CreateWorkspace';
 const Channel = loadable(() => import('@pages/channel'));
 const Message = loadable(() => import('@pages/message'));
 
@@ -34,11 +36,17 @@ import {
 } from '@styles/LayoutsStyle/workspace';
 
 const Workspace: FC = ({ children }) => {
-  const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const {
+    data: userData,
+    error,
+    revalidate,
+    mutate,
+  } = useSWR<IUser | false>('http://localhost:3095/api/users', fetcher);
   const [channelToggle, setChannelToggle] = useState(false);
   const [dmToggle, setDMToggle] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
+  const [createWorkspaceVisible, setCreateWorkspaceVisible] = useState(false);
 
   const onClickProfile = useCallback(() => {
     setProfileVisible(prev => !prev);
@@ -52,6 +60,10 @@ const Workspace: FC = ({ children }) => {
     setDMToggle(prev => !prev);
   }, []);
 
+  const onClickCreateWorkspace = useCallback(() => {
+    setCreateWorkspaceVisible(prev => !prev);
+  }, []);
+
   const onClickPage = useCallback(() => {
     setPageVisible(true);
   }, []);
@@ -60,7 +72,7 @@ const Workspace: FC = ({ children }) => {
     setPageVisible(false);
   }, []);
 
-  if (!data) {
+  if (!userData) {
     return <Redirect to="/login" />;
   }
 
@@ -70,7 +82,7 @@ const Workspace: FC = ({ children }) => {
         <Header>
           <header>H to H</header>
           <button onClick={onClickProfile}>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt={data.nickname} />
+            <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
           </button>
 
           {profileVisible && <Profile onClickProfile={onClickProfile} />}
@@ -84,30 +96,24 @@ const Workspace: FC = ({ children }) => {
         </SearchWrapper>
 
         <WorkSpaceWrapper>
-          <WorkSpace>
-            <WorkSpaceItem>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-              <p>Name1</p>
-            </WorkSpaceItem>
-          </WorkSpace>
+          {userData.Workspaces?.map(ws => {
+            return (
+              <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
+                <WorkSpace>
+                  <WorkSpaceItem>
+                    <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
+                    <p>{ws.name}</p>
+                  </WorkSpaceItem>
+                </WorkSpace>
+              </Link>
+            );
+          })}
 
-          <WorkSpace>
-            <WorkSpaceItem>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-              <p>Name2</p>
-            </WorkSpaceItem>
-          </WorkSpace>
-
-          <WorkSpace>
-            <WorkSpaceItem>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-              <p>Name3</p>
-            </WorkSpaceItem>
-          </WorkSpace>
-
-          <WorkSpace>
+          <WorkSpace onClick={onClickCreateWorkspace}>
             <FontAwesomeIcon icon={faSquarePlus} />
           </WorkSpace>
+          <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />
+          {/* {createWorkspaceVisible && <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />} */}
         </WorkSpaceWrapper>
 
         <Menu>
@@ -158,19 +164,19 @@ const Workspace: FC = ({ children }) => {
 
           <DMItem dmToggle={dmToggle}>
             <div>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+              <img src={gravatar.url(userData.email, { d: 'mm' })} alt="chanel1" />
             </div>
             <p>Slackbot</p>
           </DMItem>
           <DMItem dmToggle={dmToggle}>
             <div>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+              <img src={gravatar.url(userData.email, { d: 'mm' })} alt="chanel1" />
             </div>
             <p>zerocho</p>
           </DMItem>
           <DMItem dmToggle={dmToggle}>
             <div>
-              <img src={gravatar.url(data.email, { d: 'mm' })} alt="chanel1" />
+              <img src={gravatar.url(userData.email, { d: 'mm' })} alt="chanel1" />
             </div>
             <p>zerocho1</p>
           </DMItem>
@@ -191,30 +197,24 @@ const Workspace: FC = ({ children }) => {
       </Sidebar>
 
       <DesktopWorkspace>
-        <WorkSpace>
-          <WorkSpaceItem>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-            <p>Name1</p>
-          </WorkSpaceItem>
-        </WorkSpace>
-
-        <WorkSpace>
-          <WorkSpaceItem>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-            <p>Name2</p>
-          </WorkSpaceItem>
-        </WorkSpace>
-
-        <WorkSpace>
-          <WorkSpaceItem>
-            <img src={gravatar.url(data.email, { d: 'mm' })} alt="mm" />
-            <p>Name3</p>
-          </WorkSpaceItem>
-        </WorkSpace>
+        {userData.Workspaces?.map(ws => {
+          return (
+            <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
+              <WorkSpace>
+                <WorkSpaceItem>
+                  <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
+                  <p>{ws.name}</p>
+                </WorkSpaceItem>
+              </WorkSpace>
+            </Link>
+          );
+        })}
 
         <WorkSpace>
           <FontAwesomeIcon icon={faSquarePlus} />
         </WorkSpace>
+        <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />
+        {/* {createWorkspaceVisible && <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />} */}
       </DesktopWorkspace>
 
       <SwitchWrapper pageVisible={pageVisible}>
