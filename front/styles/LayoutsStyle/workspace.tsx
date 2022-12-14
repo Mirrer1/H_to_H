@@ -44,6 +44,10 @@ export const Header = styled.div`
   & > button > img:active {
     opacity: 100%;
   }
+
+  ${media.desktop} {
+    padding: 1em 2.5em;
+  }
 `;
 
 export const SearchWrapper = styled.div`
@@ -138,6 +142,10 @@ export const WorkSpaceItem = styled.div`
 export const Menu = styled.div`
   padding-left: 1em;
   margin-bottom: 1em;
+
+  ${media.desktop} {
+    padding: 0 2em 0 1em;
+  }
 `;
 
 export const MenuItem = styled.button`
