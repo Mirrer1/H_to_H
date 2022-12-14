@@ -112,8 +112,9 @@ const Workspace: FC = ({ children }) => {
           <WorkSpace onClick={onClickCreateWorkspace}>
             <FontAwesomeIcon icon={faSquarePlus} />
           </WorkSpace>
-          <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />
-          {/* {createWorkspaceVisible && <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />} */}
+          {createWorkspaceVisible && (
+            <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
+          )}
         </WorkSpaceWrapper>
 
         <Menu>
@@ -210,11 +211,12 @@ const Workspace: FC = ({ children }) => {
           );
         })}
 
-        <WorkSpace>
+        <WorkSpace onClick={onClickCreateWorkspace}>
           <FontAwesomeIcon icon={faSquarePlus} />
         </WorkSpace>
-        <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />
-        {/* {createWorkspaceVisible && <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} />} */}
+        {createWorkspaceVisible && (
+          <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
+        )}
       </DesktopWorkspace>
 
       <SwitchWrapper pageVisible={pageVisible}>
