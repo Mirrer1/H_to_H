@@ -22,6 +22,7 @@ export const Sidebar = styled.div<{ pageVisible?: boolean }>`
 `;
 
 export const Header = styled.div`
+  position: relative;
   width: 100%;
   padding: 1em 1.5em;
   ${props => props.theme.flexSet('space-between')};
@@ -177,7 +178,7 @@ export const ChannelItem = styled(MenuItem)<{ channelToggle?: boolean }>`
   display: ${props => props.channelToggle && 'none'};
   padding-left: 1em;
 
-  &:first-child {
+  &:first-of-type {
     padding-left: 0;
   }
 `;

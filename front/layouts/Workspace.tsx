@@ -9,6 +9,10 @@ import gravatar from 'gravatar';
 import loadable from '@loadable/component';
 
 import fetcher from '@utils/fetcher';
+import Profile from '@components/Modal/Profile';
+const Channel = loadable(() => import('@pages/channel'));
+const Message = loadable(() => import('@pages/message'));
+
 import {
   Container,
   Sidebar,
@@ -29,23 +33,15 @@ import {
   SwitchWrapper,
 } from '@styles/LayoutsStyle/workspace';
 
-const Channel = loadable(() => import('@pages/channel'));
-const Message = loadable(() => import('@pages/message'));
-
 const Workspace: FC = ({ children }) => {
   const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
   const [channelToggle, setChannelToggle] = useState(false);
   const [dmToggle, setDMToggle] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
+  const [profileVisible, setProfileVisible] = useState(false);
 
-  const onLogout = useCallback(() => {
-    axios
-      .post('http://localhost:3095/api/users/logout', null, {
-        withCredentials: true,
-      })
-      .then(() => {
-        mutate(false, false);
-      });
+  const onClickProfile = useCallback(() => {
+    setProfileVisible(prev => !prev);
   }, []);
 
   const onClickChannel = useCallback(() => {
@@ -70,14 +66,14 @@ const Workspace: FC = ({ children }) => {
 
   return (
     <Container>
-      {/* <button onClick={onLogout}>로그아웃</button> */}
-
       <Sidebar pageVisible={pageVisible}>
         <Header>
           <header>H to H</header>
-          <button>
+          <button onClick={onClickProfile}>
             <img src={gravatar.url(data.email, { d: 'mm' })} alt={data.nickname} />
           </button>
+
+          {profileVisible && <Profile onClickProfile={onClickProfile} />}
         </Header>
 
         <SearchWrapper>
@@ -225,6 +221,7 @@ const Workspace: FC = ({ children }) => {
         <button onClick={onClickReturnPage}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
+
         <Switch>
           <Route path="/workspace/channel" component={Channel} />
           <Route path="/workspace/message" component={Message} />
