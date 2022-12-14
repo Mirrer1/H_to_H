@@ -1,12 +1,12 @@
-import React, { useCallback, Dispatch, SetStateAction } from 'react';
+import React, { useCallback, Dispatch, SetStateAction, useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
 
 import fetcher from '@utils/fetcher';
+import CreateChannel from '@components/Modal/CreateChannel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-
 import { ProfileWrapper, ProfileContent, ProfileBtn } from '@styles/ComponentsStyle/Modal/profile';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 
 const Profile = ({ onClickProfile }: Props) => {
   const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const [createChannelVisible, setCreateChannelVisible] = useState(false);
 
   const onLogout = useCallback(() => {
     axios
@@ -24,6 +25,10 @@ const Profile = ({ onClickProfile }: Props) => {
       .then(() => {
         mutate(false, false);
       });
+  }, []);
+
+  const onClickCreateChannel = useCallback(() => {
+    setCreateChannelVisible(prev => !prev);
   }, []);
 
   return (
@@ -39,8 +44,13 @@ const Profile = ({ onClickProfile }: Props) => {
       </ProfileContent>
 
       <ProfileBtn>
+        <button onClick={onClickCreateChannel}>채널 생성</button>
         <button onClick={onLogout}>로그아웃</button>
       </ProfileBtn>
+
+      {createChannelVisible && (
+        <CreateChannel setCreateChannelVisible={onClickCreateChannel} onClickProfile={onClickProfile} />
+      )}
     </ProfileWrapper>
   );
 };

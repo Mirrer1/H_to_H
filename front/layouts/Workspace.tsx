@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useCallback, useState } from 'react';
+import { Redirect, useParams } from 'react-router';
 import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faAngleDown, faAngleRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import useSWR from 'swr';
 import gravatar from 'gravatar';
 import loadable from '@loadable/component';
 
-import { IUser } from '@typings/db';
+import { IChannel, IUser } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import Profile from '@components/Modal/Profile';
 import CreateWorkspace from '@components/Modal/CreateWorkspace';
@@ -24,29 +24,35 @@ import {
   WorkSpaceWrapper,
   WorkSpace,
   WorkSpaceItem,
-  Menu,
-  MenuItem,
   Channels,
+  ChannelHeader,
   ChannelItem,
-  DM,
-  DMItem,
+  // DM,
+  // DMItem,
   Footer,
   DesktopWorkspace,
   SwitchWrapper,
 } from '@styles/LayoutsStyle/workspace';
 
-const Workspace: FC = ({ children }) => {
+const Workspace = () => {
+  const [channelToggle, setChannelToggle] = useState(false);
+  const [dmToggle, setDMToggle] = useState(false);
+  const [pageVisible, setPageVisible] = useState(false);
+  const [profileVisible, setProfileVisible] = useState(false);
+  const [createWorkspaceVisible, setCreateWorkspaceVisible] = useState(false);
+  const { workspace } = useParams<{ workspace: string }>();
+
   const {
     data: userData,
     error,
     revalidate,
     mutate,
   } = useSWR<IUser | false>('http://localhost:3095/api/users', fetcher);
-  const [channelToggle, setChannelToggle] = useState(false);
-  const [dmToggle, setDMToggle] = useState(false);
-  const [pageVisible, setPageVisible] = useState(false);
-  const [profileVisible, setProfileVisible] = useState(false);
-  const [createWorkspaceVisible, setCreateWorkspaceVisible] = useState(false);
+
+  const { data: channelData } = useSWR<IChannel[]>(
+    userData ? `http://localhost:3095/api/workspaces/${workspace}/channels` : null,
+    fetcher,
+  );
 
   const onClickProfile = useCallback(() => {
     setProfileVisible(prev => !prev);
@@ -117,47 +123,27 @@ const Workspace: FC = ({ children }) => {
           )}
         </WorkSpaceWrapper>
 
-        <Menu>
-          <MenuItem>
-            <div>@</div>
-            <p>Threads</p>
-          </MenuItem>
-          <MenuItem>
-            <div>@</div>
-            <p>Mentions & reactions</p>
-          </MenuItem>
-          <MenuItem>
-            <div>@</div>
-            <p>Saved Items</p>
-          </MenuItem>
-          <MenuItem>
-            <div>:</div>
-            <p>More</p>
-          </MenuItem>
-        </Menu>
-
         <Channels>
-          <ChannelItem onClick={onClickChannel}>
+          <ChannelHeader onClick={onClickChannel}>
             <div>
               {channelToggle ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleDown} />}
             </div>
             <p>Channels</p>
-          </ChannelItem>
-
-          <ChannelItem channelToggle={channelToggle} onClick={onClickPage}>
-            <div>#</div>
-            <p>일반</p>
-          </ChannelItem>
+          </ChannelHeader>
 
           <ChannelItem channelToggle={channelToggle}>
-            <div>
-              <FontAwesomeIcon icon={faSquarePlus} />
-            </div>
-            <p>Add channels</p>
+            {channelData?.map(v => {
+              return (
+                <button key={v.id} onClick={onClickPage}>
+                  <div>#</div>
+                  <p key={v.id}>{v.name}</p>
+                </button>
+              );
+            })}
           </ChannelItem>
         </Channels>
 
-        <DM>
+        {/* <DM>
           <DMItem onClick={onClickDM}>
             <div>{dmToggle ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleDown} />}</div>
             <p>Direct message</p>
@@ -187,7 +173,7 @@ const Workspace: FC = ({ children }) => {
             </div>
             <p>Add teammates</p>
           </DMItem>
-        </DM>
+        </DM> */}
 
         <Footer>
           <div>NodeJS KR Developer Group</div>
@@ -225,8 +211,8 @@ const Workspace: FC = ({ children }) => {
         </button>
 
         <Switch>
-          <Route path="/workspace/channel" component={Channel} />
-          <Route path="/workspace/message" component={Message} />
+          <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
+          <Route path="/workspace/:workspace/message/:id" component={Message} />
         </Switch>
       </SwitchWrapper>
     </Container>

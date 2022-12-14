@@ -3,7 +3,7 @@ import media from '@styles/media';
 
 export const ProfileWrapper = styled.div`
   width: 15em;
-  background-color: #eeeeee;
+  background-color: #e9e9e9;
   position: absolute;
   border: 1px solid white;
   border-radius: 0.5rem;
@@ -77,14 +77,17 @@ export const ProfileContent = styled.div`
 export const ProfileBtn = styled.div`
   text-align: center;
   padding-top: 0.5em;
+  ${props => props.theme.flexColumnSet()};
 
   & > button {
+    width: 100%;
     font-size: 0.8rem;
     font-weight: 700;
     opacity: 70%;
-    border-radius: 0.5rem;
-    padding: 0.2em 0.5em;
     transition: opacity 300ms ease-in-out;
+    border-bottom: 1px solid white;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
   }
 
   & > button:hover {

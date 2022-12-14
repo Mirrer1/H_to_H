@@ -137,7 +137,7 @@ export const WorkSpaceItem = styled.div`
   }
 `;
 
-export const Menu = styled.div`
+export const Channels = styled.div`
   padding-left: 1em;
   margin-bottom: 1em;
 
@@ -146,49 +146,54 @@ export const Menu = styled.div`
   }
 `;
 
-export const MenuItem = styled.button`
-  width: 100%;
-  font-size: 1rem;
-  transition: opacity 300ms ease-in-out;
+export const ChannelHeader = styled.div`
   ${props => props.theme.flexSet('start')};
-
-  &:hover {
-    opacity: 40%;
-  }
-
-  &:active {
-    opacity: 100%;
-  }
-
-  &:focus {
-    background-color: #e6ddc4;
-  }
-
-  & > div {
-    width: 2em;
-  }
-`;
-
-export const Channels = styled(Menu)``;
-
-export const ChannelItem = styled(MenuItem)<{ channelToggle?: boolean }>`
-  display: ${props => props.channelToggle && 'none'};
-  padding-left: 1em;
-
-  &:first-of-type {
-    padding-left: 0;
-  }
-`;
-
-export const DM = styled(Menu)``;
-export const DMItem = styled(ChannelItem)<{ dmToggle?: boolean }>`
-  display: ${props => props.dmToggle && 'none'};
-  margin-bottom: 0.5em;
 
   & > div {
     margin-right: 0.5em;
   }
+
+  & > p {
+    font-size: 1rem;
+    font-weight: 700;
+  }
 `;
+
+export const ChannelItem = styled.div<{ channelToggle?: boolean }>`
+  padding-left: 1em;
+  display: ${props => props.channelToggle && 'none'};
+
+  & > button {
+    transition: opacity 300ms ease-in-out;
+    ${props => props.theme.flexSet('start')};
+  }
+
+  & > button > div {
+    margin-right: 0.5em;
+  }
+
+  & > button:hover {
+    opacity: 40%;
+  }
+
+  & > button:active {
+    opacity: 100%;
+  }
+
+  & > button:focus {
+    background-color: #e6ddc4;
+  }
+`;
+
+// export const DM = styled(Menu)``;
+// export const DMItem = styled(ChannelItem)<{ dmToggle?: boolean }>`
+//   display: ${props => props.dmToggle && 'none'};
+//   margin-bottom: 0.5em;
+
+//   & > div {
+//     margin-right: 0.5em;
+//   }
+// `;
 
 export const Footer = styled.div`
   width: 100%;
