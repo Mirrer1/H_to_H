@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Redirect, useParams } from 'react-router';
 import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import useSWR from 'swr';
 import gravatar from 'gravatar';
 import loadable from '@loadable/component';
 
-import { IUser } from '@typings/db';
+import { IUser, IChannel } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import Profile from '@components/Modal/Profile';
 import CreateWorkspace from '@components/Modal/CreateWorkspace';
@@ -27,18 +27,18 @@ import {
   WorkSpaceWrapper,
   WorkSpace,
   WorkSpaceItem,
-  // DM,
-  // DMItem,
   Footer,
   DesktopWorkspace,
   SwitchWrapper,
 } from '@styles/LayoutsStyle/workspace';
+import useSocket from '@hooks/useSocket';
 
 const Workspace = () => {
-  // const [dmToggle, setDMToggle] = useState(false);
+  const { workspace } = useParams<{ workspace: string }>();
   const [pageVisible, setPageVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const [createWorkspaceVisible, setCreateWorkspaceVisible] = useState(false);
+  const [socket, disconnect] = useSocket(workspace);
 
   const {
     data: userData,
@@ -49,13 +49,23 @@ const Workspace = () => {
     dedupingInterval: 2000,
   });
 
+  const { data: channelData } = useSWR<IChannel[]>(userData ? `/api/workspaces/${workspace}/channels` : null, fetcher);
+
+  useEffect(() => {
+    if (channelData && userData && socket) {
+      socket.emit('login', { id: userData.id, channels: channelData.map(v => v.id) });
+    }
+  }, [socket, channelData, userData]);
+
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+  }, [workspace, disconnect]);
+
   const onClickProfile = useCallback(() => {
     setProfileVisible(prev => !prev);
   }, []);
-
-  // const onClickDM = useCallback(() => {
-  //   setDMToggle(prev => !prev);
-  // }, []);
 
   const onClickCreateWorkspace = useCallback(() => {
     setCreateWorkspaceVisible(prev => !prev);
