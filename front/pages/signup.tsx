@@ -18,7 +18,7 @@ import {
 } from '@styles/PageStyle/signup';
 
 const SignUp = () => {
-  const { data, error, revalidate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const { data, error, revalidate } = useSWR('/api/users', fetcher);
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -55,7 +55,7 @@ const SignUp = () => {
       setSignupSuccess(false);
       setSignupError('');
       axios
-        .post('http://localhost:3095/api/users', {
+        .post('/api/users', {
           email,
           nickname,
           password,

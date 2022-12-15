@@ -26,10 +26,10 @@ const CreateChannel = ({ setCreateChannelVisible, onClickProfile }: Props) => {
   const [newChannel, onChangeChannel, setNewChannel] = useInput('');
   const { workspace } = useParams<{ workspace: string; channel: string }>();
 
-  const { data: userData } = useSWR<IUser | false>('http://localhost:3095/api/users', fetcher);
+  const { data: userData } = useSWR<IUser | false>('/api/users', fetcher);
 
   const { data: channelData, revalidate: revalidateChannel } = useSWR<IChannel[]>(
-    userData ? `http://localhost:3095/api/workspaces/${workspace}/channels` : null,
+    userData ? `/api/workspaces/${workspace}/channels` : null,
     fetcher,
   );
 
@@ -38,7 +38,7 @@ const CreateChannel = ({ setCreateChannelVisible, onClickProfile }: Props) => {
       e.preventDefault();
       axios
         .post(
-          `http://localhost:3095/api/workspaces/${workspace}/channels`,
+          `/api/workspaces/${workspace}/channels`,
           {
             name: newChannel,
           },

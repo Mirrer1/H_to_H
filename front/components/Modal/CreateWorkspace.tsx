@@ -30,7 +30,7 @@ const CreateWorkspace = ({ setCreateWorkspaceVisible, revalidate }: Props) => {
 
       axios
         .post(
-          'http://localhost:3095/api/workspaces',
+          '/api/workspaces',
           {
             workspace: newWorkspace,
             url: newUrl,

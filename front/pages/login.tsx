@@ -10,7 +10,7 @@ import ErrorModal from '@components/Modal/Error';
 import { FormWrapper, Form, FormItem, FormBtn, FormImage, ImageMainText, ImageSubText } from '@styles/PageStyle/login';
 
 const LogIn = () => {
-  const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [loginError, setLoginError] = useState('');
@@ -21,7 +21,7 @@ const LogIn = () => {
       setLoginError('');
       axios
         .post(
-          'http://localhost:3095/api/users/login',
+          '/api/users/login',
           { email, password },
           {
             withCredentials: true,

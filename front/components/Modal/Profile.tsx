@@ -14,12 +14,12 @@ interface Props {
 }
 
 const Profile = ({ onClickProfile }: Props) => {
-  const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
+  const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
 
   const onLogout = useCallback(() => {
     axios
-      .post('http://localhost:3095/api/users/logout', null, {
+      .post('/api/users/logout', null, {
         withCredentials: true,
       })
       .then(() => {
