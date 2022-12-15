@@ -14,6 +14,7 @@ export const ChannelHeader = styled.div`
   ${props => props.theme.flexSet('start')};
 
   & > div {
+    width: 1em;
     margin-right: 0.5em;
   }
 
@@ -23,29 +24,31 @@ export const ChannelHeader = styled.div`
   }
 `;
 
-export const ChannelItem = styled.div<{ channelToggle?: boolean }>`
+export const ChannelItem = styled.div<{ toggle?: boolean }>`
   padding-left: 1em;
-  display: ${props => props.channelToggle && 'none'};
+  display: ${props => props.toggle && 'none'};
 
-  & > button {
+  & > a > button {
     width: 100%;
     transition: opacity 300ms ease-in-out;
     ${props => props.theme.flexSet('start')};
   }
 
-  & > button > div {
+  & > a > button > div {
     margin-right: 0.5em;
   }
 
-  & > button:hover {
+  & > a > button:hover {
     opacity: 40%;
   }
 
-  & > button:active {
+  & > a > button:active {
     opacity: 100%;
   }
 
-  & > button:focus {
+  & > a > button:focus {
     background-color: #e6ddc4;
+    transform: scale(1.05);
+    font-weight: 700;
   }
 `;

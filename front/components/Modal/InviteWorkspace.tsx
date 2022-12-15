@@ -27,8 +27,8 @@ const InviteWorkspace = ({ setInviteWorkspaceVisible, onClickProfile }: Props) =
   const { workspace } = useParams<{ workspace: string; channel: string }>();
 
   const { data: userData } = useSWR<IUser | false>('/api/users', fetcher);
-  const { data: channelData, revalidate: revalidateChannel } = useSWR<IChannel[]>(
-    userData ? `/api/workspaces/${workspace}/channels` : null,
+  const { revalidate: revalidateMembers } = useSWR<IChannel[]>(
+    userData ? `/api/workspaces/${workspace}/members` : null,
     fetcher,
   );
 
@@ -50,7 +50,7 @@ const InviteWorkspace = ({ setInviteWorkspaceVisible, onClickProfile }: Props) =
         )
         .then(() => {
           setNewMember('');
-          revalidateChannel();
+          revalidateMembers();
           setInviteWorkspaceVisible();
           onClickProfile();
         })

@@ -13,6 +13,7 @@ import fetcher from '@utils/fetcher';
 import Profile from '@components/Modal/Profile';
 import CreateWorkspace from '@components/Modal/CreateWorkspace';
 import ChannelList from '@components/WorkSpace/ChannelList';
+import DMList from '@components/WorkSpace/DMList';
 
 const Channel = loadable(() => import('@pages/channel'));
 const Message = loadable(() => import('@pages/message'));
@@ -76,14 +77,12 @@ const Workspace = () => {
 
           {profileVisible && <Profile onClickProfile={onClickProfile} />}
         </Header>
-
         <SearchWrapper>
           <Search id="search-label">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
             <input type="text" placeholder="Search messages or users" />
           </Search>
         </SearchWrapper>
-
         <WorkSpaceWrapper>
           {userData.Workspaces?.map(ws => {
             return (
@@ -107,38 +106,7 @@ const Workspace = () => {
         </WorkSpaceWrapper>
 
         <ChannelList setPageVisible={onClickPage} />
-
-        {/* <DM>
-          <DMItem onClick={onClickDM}>
-            <div>{dmToggle ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleDown} />}</div>
-            <p>Direct message</p>
-          </DMItem>
-
-          <DMItem dmToggle={dmToggle}>
-            <div>
-              <img src={gravatar.url(userData.email, { d: 'mm' })} alt="chanel1" />
-            </div>
-            <p>Slackbot</p>
-          </DMItem>
-          <DMItem dmToggle={dmToggle}>
-            <div>
-              <img src={gravatar.url(userData.email, { d: 'mm' })} alt="chanel1" />
-            </div>
-            <p>zerocho</p>
-          </DMItem>
-          <DMItem dmToggle={dmToggle}>
-            <div>
-              <img src={gravatar.url(userData.email, { d: 'mm' })} alt="chanel1" />
-            </div>
-            <p>zerocho1</p>
-          </DMItem>
-          <DMItem dmToggle={dmToggle}>
-            <div>
-              <FontAwesomeIcon icon={faSquarePlus} />
-            </div>
-            <p>Add teammates</p>
-          </DMItem>
-        </DM> */}
+        <DMList setPageVisible={onClickPage} />
 
         <Footer>
           <div>NodeJS KR Developer Group</div>
