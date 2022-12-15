@@ -18,7 +18,9 @@ import {
 } from '@styles/PageStyle/signup';
 
 const SignUp = () => {
-  const { data, error, revalidate } = useSWR('/api/users', fetcher);
+  const { data, error, revalidate } = useSWR('/api/users', fetcher, {
+    dedupingInterval: 2000,
+  });
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');

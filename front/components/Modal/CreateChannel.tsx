@@ -26,7 +26,9 @@ const CreateChannel = ({ setCreateChannelVisible, onClickProfile }: Props) => {
   const [newChannel, onChangeChannel, setNewChannel] = useInput('');
   const { workspace } = useParams<{ workspace: string; channel: string }>();
 
-  const { data: userData } = useSWR<IUser | false>('/api/users', fetcher);
+  const { data: userData } = useSWR<IUser | false>('/api/users', fetcher, {
+    dedupingInterval: 2000,
+  });
   const { data: channelData, revalidate: revalidateChannel } = useSWR<IChannel[]>(
     userData ? `/api/workspaces/${workspace}/channels` : null,
     fetcher,

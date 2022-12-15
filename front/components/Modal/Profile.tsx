@@ -16,7 +16,9 @@ interface Props {
 }
 
 const Profile = ({ onClickProfile }: Props) => {
-  const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher);
+  const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher, {
+    dedupingInterval: 2000,
+  });
   const [inviteWorkspaceVisible, setInviteWorkspaceVisible] = useState(false);
   const [inviteChannelVisible, setInviteChannelVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);

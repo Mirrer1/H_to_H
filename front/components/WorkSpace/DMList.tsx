@@ -18,7 +18,9 @@ const DMList = ({ setPageVisible }: Props) => {
   const [toggle, setToggle] = useState(false);
   const { workspace } = useParams<{ workspace?: string }>();
 
-  const { data: userData } = useSWR<IUser | undefined>('/api/users', fetcher);
+  const { data: userData } = useSWR<IUser | undefined>('/api/users', fetcher, {
+    dedupingInterval: 2000,
+  });
   const { data: memberData } = useSWR<IUserWithOnline[]>(
     userData ? `/api/workspaces/${workspace}/members` : null,
     fetcher,

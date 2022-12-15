@@ -26,7 +26,9 @@ const InviteWorkspace = ({ setInviteWorkspaceVisible, onClickProfile }: Props) =
   const [newMember, onChangeNewMember, setNewMember] = useInput('');
   const { workspace } = useParams<{ workspace: string; channel: string }>();
 
-  const { data: userData } = useSWR<IUser | false>('/api/users', fetcher);
+  const { data: userData } = useSWR<IUser | false>('/api/users', fetcher, {
+    dedupingInterval: 2000,
+  });
   const { revalidate: revalidateMembers } = useSWR<IChannel[]>(
     userData ? `/api/workspaces/${workspace}/members` : null,
     fetcher,

@@ -40,7 +40,14 @@ const Workspace = () => {
   const [profileVisible, setProfileVisible] = useState(false);
   const [createWorkspaceVisible, setCreateWorkspaceVisible] = useState(false);
 
-  const { data: userData, error, revalidate, mutate } = useSWR<IUser | false>('/api/users', fetcher);
+  const {
+    data: userData,
+    error,
+    revalidate,
+    mutate,
+  } = useSWR<IUser | false>('/api/users', fetcher, {
+    dedupingInterval: 2000,
+  });
 
   const onClickProfile = useCallback(() => {
     setProfileVisible(prev => !prev);
