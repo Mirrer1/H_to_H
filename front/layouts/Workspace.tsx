@@ -152,7 +152,7 @@ const Workspace = () => {
 
         <Switch>
           <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
-          <Route path="/workspace/:workspace/message/:id" component={Message} />
+          <Route path="/workspace/:workspace/dm/:id" component={Message} />
         </Switch>
       </SwitchWrapper>
     </Container>
