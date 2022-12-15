@@ -8,6 +8,7 @@ import CreateChannel from '@components/Modal/CreateChannel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ProfileWrapper, ProfileContent, ProfileBtn } from '@styles/ComponentsStyle/Modal/profile';
+import InviteWorkspace from './InviteWorkspace';
 
 interface Props {
   onClickProfile: () => void;
@@ -15,6 +16,7 @@ interface Props {
 
 const Profile = ({ onClickProfile }: Props) => {
   const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher);
+  const [inviteWorkspaceVisible, setInviteWorkspaceVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
 
   const onLogout = useCallback(() => {
@@ -25,6 +27,10 @@ const Profile = ({ onClickProfile }: Props) => {
       .then(() => {
         mutate(false, false);
       });
+  }, []);
+
+  const onClickInviteWorkspace = useCallback(() => {
+    setInviteWorkspaceVisible(prev => !prev);
   }, []);
 
   const onClickCreateChannel = useCallback(() => {
@@ -44,9 +50,15 @@ const Profile = ({ onClickProfile }: Props) => {
       </ProfileContent>
 
       <ProfileBtn>
+        <button onClick={onClickInviteWorkspace}>워크스페이스에 사용자 초대</button>
+        {/* <button>채널에 사용자 초대</button> */}
         <button onClick={onClickCreateChannel}>채널 생성</button>
         <button onClick={onLogout}>로그아웃</button>
       </ProfileBtn>
+
+      {inviteWorkspaceVisible && (
+        <InviteWorkspace setInviteWorkspaceVisible={onClickInviteWorkspace} onClickProfile={onClickProfile} />
+      )}
 
       {createChannelVisible && (
         <CreateChannel setCreateChannelVisible={onClickCreateChannel} onClickProfile={onClickProfile} />

@@ -1,10 +1,8 @@
 import React, { useCallback } from 'react';
 import { useParams } from 'react-router';
-import { toast } from 'react-toastify';
+import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import useSWR from 'swr';
 
 import useInput from '@hooks/useInput';
 import fetcher from '@utils/fetcher';
@@ -16,14 +14,16 @@ import {
   CreateWrapper,
   CreateXBtn,
 } from '@styles/ComponentsStyle/Modal/createWorkspace';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface Props {
-  setCreateChannelVisible: () => void;
+  setInviteWorkspaceVisible: () => void;
   onClickProfile: () => void;
 }
 
-const CreateChannel = ({ setCreateChannelVisible, onClickProfile }: Props) => {
-  const [newChannel, onChangeChannel, setNewChannel] = useInput('');
+const InviteWorkspace = ({ setInviteWorkspaceVisible, onClickProfile }: Props) => {
+  const [newMember, onChangeNewMember, setNewMember] = useInput('');
   const { workspace } = useParams<{ workspace: string; channel: string }>();
 
   const { data: userData } = useSWR<IUser | false>('/api/users', fetcher);
@@ -32,28 +32,26 @@ const CreateChannel = ({ setCreateChannelVisible, onClickProfile }: Props) => {
     fetcher,
   );
 
-  const onCreateChannel = useCallback(
+  const onInviteMember = useCallback(
     e => {
       e.preventDefault();
 
-      if (!newChannel || !newChannel.trim()) {
+      if (!newMember || !newMember.trim()) {
         return;
       }
 
       axios
         .post(
-          `/api/workspaces/${workspace}/channels`,
+          `/api/workspaces/${workspace}/members`,
           {
-            name: newChannel,
+            email: newMember,
           },
-          {
-            withCredentials: true,
-          },
+          { withCredentials: true },
         )
         .then(() => {
-          setNewChannel('');
+          setNewMember('');
           revalidateChannel();
-          setCreateChannelVisible();
+          setInviteWorkspaceVisible();
           onClickProfile();
         })
         .catch(error => {
@@ -61,31 +59,29 @@ const CreateChannel = ({ setCreateChannelVisible, onClickProfile }: Props) => {
           toast.error(error.response?.data, { position: 'top-center' });
         });
     },
-    [newChannel],
+    [newMember],
   );
 
   return (
-    <>
-      <CreateWrapper>
-        <CreateXBtn onClick={setCreateChannelVisible}>
-          <FontAwesomeIcon icon={faXmark} />
-        </CreateXBtn>
+    <CreateWrapper>
+      <CreateXBtn onClick={setInviteWorkspaceVisible}>
+        <FontAwesomeIcon icon={faXmark} />
+      </CreateXBtn>
 
-        <CreateForm>
-          <form onSubmit={onCreateChannel}>
-            <CreateFormItem id="channel-label">
-              <div>채널 이름</div>
-              <input id="channel" value={newChannel} onChange={onChangeChannel} />
-            </CreateFormItem>
+      <CreateForm>
+        <form onSubmit={onInviteMember}>
+          <CreateFormItem id="member-label">
+            <div>EMAIL</div>
+            <input id="member" type="email" value={newMember} onChange={onChangeNewMember} />
+          </CreateFormItem>
 
-            <CreateFormBtn type="submit" mainBtn>
-              Create
-            </CreateFormBtn>
-          </form>
-        </CreateForm>
-      </CreateWrapper>
-    </>
+          <CreateFormBtn type="submit" mainBtn>
+            초대
+          </CreateFormBtn>
+        </form>
+      </CreateForm>
+    </CreateWrapper>
   );
 };
 
-export default CreateChannel;
+export default InviteWorkspace;
