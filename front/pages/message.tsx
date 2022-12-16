@@ -9,6 +9,7 @@ import useInput from '@hooks/useInput';
 import ChatList from '@components/Dialog/ChatList';
 import ChatBox from '@components/Dialog/ChatBox';
 import { IDM } from '@typings/db';
+import makeSection from '@utils/makeSection';
 
 const Message = () => {
   const [chat, onChangeChat, setChat] = useInput('');
@@ -43,13 +44,15 @@ const Message = () => {
 
   if (!userData || !myData) return null;
 
+  const chatSections = makeSection(chatData ? [...chatData].reverse() : []);
+
   return (
     <>
       <div>
         <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
         <span>{userData.nickname}</span>
 
-        <ChatList chatData={chatData} />
+        <ChatList chatSections={chatSections} />
         <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
       </div>
     </>
