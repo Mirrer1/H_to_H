@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import media from '@styles/media';
 
-export const MessageWrapper = styled.div``;
-
 export const MessageHeader = styled.div`
   border-bottom: 1px solid #f0eff5;
   padding: 1em;
@@ -33,6 +31,8 @@ export const MessageHeader = styled.div`
   }
 
   ${media.desktop} {
+    padding: 1.5em;
+
     & > button {
       display: none;
     }

@@ -14,7 +14,7 @@ import makeSection from '@utils/makeSection';
 import Scrollbars from 'react-custom-scrollbars';
 import useSocket from '@hooks/useSocket';
 import { IDM } from '@typings/db';
-import { MessageWrapper, MessageHeader } from '@styles/PageStyle/message';
+import { MessageHeader } from '@styles/PageStyle/message';
 
 interface Props {
   onClickReturnPage: () => void;
@@ -114,7 +114,7 @@ const Message = ({ onClickReturnPage }: Props) => {
   const chatSections = makeSection(chatData ? chatData.flat().reverse() : []);
 
   return (
-    <MessageWrapper>
+    <>
       <MessageHeader>
         <button onClick={onClickReturnPage}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -127,7 +127,7 @@ const Message = ({ onClickReturnPage }: Props) => {
 
       <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
-    </MessageWrapper>
+    </>
   );
 };
 
