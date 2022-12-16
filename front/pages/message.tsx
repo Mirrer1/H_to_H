@@ -49,7 +49,7 @@ const Message = () => {
         <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
         <span>{userData.nickname}</span>
 
-        <ChatList />
+        <ChatList chatData={chatData} />
         <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
       </div>
     </>

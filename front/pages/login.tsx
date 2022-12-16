@@ -30,7 +30,7 @@ const LogIn = () => {
           },
         )
         .then(response => {
-          mutate(response.data, false);
+          revalidate();
         })
         .catch(error => {
           console.log(error.response);
