@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import gravatar from 'gravatar';
 import useSWR, { useSWRInfinite } from 'swr';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 import fetcher from '@utils/fetcher';
@@ -12,8 +14,13 @@ import makeSection from '@utils/makeSection';
 import Scrollbars from 'react-custom-scrollbars';
 import useSocket from '@hooks/useSocket';
 import { IDM } from '@typings/db';
+import { MessageWrapper, MessageHeader } from '@styles/PageStyle/message';
 
-const Message = () => {
+interface Props {
+  onClickReturnPage: () => void;
+}
+
+const Message = ({ onClickReturnPage }: Props) => {
   const scrollbarRef = useRef<Scrollbars>(null);
   const [chat, onChangeChat, setChat] = useInput('');
 
@@ -107,15 +114,20 @@ const Message = () => {
   const chatSections = makeSection(chatData ? chatData.flat().reverse() : []);
 
   return (
-    <>
-      <div>
-        <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
-        <span>{userData.nickname}</span>
+    <MessageWrapper>
+      <MessageHeader>
+        <button onClick={onClickReturnPage}>
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
 
-        <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
-        <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
-      </div>
-    </>
+        <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
+        <p>{userData.nickname}</p>
+        <div></div>
+      </MessageHeader>
+
+      <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
+      <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
+    </MessageWrapper>
   );
 };
 

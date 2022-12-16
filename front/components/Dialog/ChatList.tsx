@@ -29,8 +29,6 @@ const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isReach
   return (
     <>
       <Scrollbars autoHide ref={scrollRef} onScrollFrame={onScroll}>
-        <div>chatlist</div>
-
         {Object.entries(chatSections).map(([date, chats]) => {
           return (
             <section key={date}>

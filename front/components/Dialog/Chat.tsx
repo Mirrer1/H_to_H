@@ -36,8 +36,8 @@ const Chat = ({ data }: Props) => {
   return (
     <>
       <img src={gravatar.url(user.email, { d: 'mm' })} alt={user.nickname} />
-
       <div>{user.nickname}</div>
+
       <span>{dayjs(data.createdAt).format('h:mm A')}</span>
       <p>{result}</p>
     </>

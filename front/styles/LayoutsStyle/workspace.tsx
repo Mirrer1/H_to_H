@@ -206,9 +206,5 @@ export const SwitchWrapper = styled.div<{ pageVisible?: boolean }>`
     display: block;
     width: 100%;
     order: 3;
-
-    & > button {
-      display: none;
-    }
   }
 `;
