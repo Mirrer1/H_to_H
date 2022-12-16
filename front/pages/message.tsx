@@ -8,9 +8,10 @@ import fetcher from '@utils/fetcher';
 import useInput from '@hooks/useInput';
 import ChatList from '@components/Dialog/ChatList';
 import ChatBox from '@components/Dialog/ChatBox';
-import { IDM } from '@typings/db';
 import makeSection from '@utils/makeSection';
 import Scrollbars from 'react-custom-scrollbars';
+import useSocket from '@hooks/useSocket';
+import { IDM } from '@typings/db';
 
 const Message = () => {
   const scrollbarRef = useRef<Scrollbars>(null);
@@ -29,6 +30,7 @@ const Message = () => {
     fetcher,
   );
 
+  const [socket] = useSocket(workspace);
   const isEmpty = chatData?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (chatData && chatData[chatData.length - 1]?.length < 20) || false;
 
@@ -66,6 +68,33 @@ const Message = () => {
     },
     [chat, chatData, myData, userData, workspace, id],
   );
+
+  const onMessage = useCallback((data: IDM) => {
+    if (data.SenderId === Number(id) && myData.id !== Number(id)) {
+      mutateChat(chatData => {
+        chatData?.[0].unshift(data);
+        return chatData;
+      }, false).then(() => {
+        if (scrollbarRef.current) {
+          if (
+            scrollbarRef.current.getScrollHeight() <
+            scrollbarRef.current.getScrollHeight() + scrollbarRef.current.getScrollTop() + 150
+          ) {
+            setTimeout(() => {
+              scrollbarRef.current?.scrollToBottom();
+            }, 50);
+          }
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    socket?.on('dm', onMessage);
+    return () => {
+      socket?.off('dm', onMessage);
+    };
+  }, [socket, onMessage]);
 
   useEffect(() => {
     if (chatData?.length === 1) {
