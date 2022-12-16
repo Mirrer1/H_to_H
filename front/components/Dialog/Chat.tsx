@@ -4,15 +4,15 @@ import gravatar from 'gravatar';
 import dayjs from 'dayjs';
 import regexifyString from 'regexify-string';
 
-import { IDM } from '@typings/db';
+import { IDM, IChat } from '@typings/db';
 
 interface Props {
-  data: IDM;
+  data: IDM | IChat;
 }
 
 const Chat = ({ data }: Props) => {
   const { workspace } = useParams<{ workspace: string }>();
-  const user = data.Sender;
+  const user = 'Sender' in data ? data.Sender : data.User;
 
   const result = useMemo(
     () =>
