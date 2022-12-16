@@ -4,6 +4,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { Scrollbars } from 'react-custom-scrollbars';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
 import loadable from '@loadable/component';
@@ -30,6 +31,7 @@ import {
   Footer,
   DesktopWorkspace,
   SwitchWrapper,
+  ScrollbarWrapper,
 } from '@styles/LayoutsStyle/workspace';
 import useSocket from '@hooks/useSocket';
 
@@ -122,8 +124,12 @@ const Workspace = () => {
           )}
         </WorkSpaceWrapper>
 
-        <ChannelList setPageVisible={onClickPage} />
-        <DMList setPageVisible={onClickPage} />
+        <ScrollbarWrapper>
+          <Scrollbars autoHide>
+            <ChannelList setPageVisible={onClickPage} />
+            <DMList setPageVisible={onClickPage} />
+          </Scrollbars>
+        </ScrollbarWrapper>
 
         <Footer>
           <div>NodeJS KR Developer Group</div>

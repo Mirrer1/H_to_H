@@ -14,6 +14,14 @@ const style = css`
     flex-shrink: 0;
   }
 
+  body {
+    -ms-overflow-style: none;
+  }
+    
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   :root {
     -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;

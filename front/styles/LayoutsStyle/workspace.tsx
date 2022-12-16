@@ -18,6 +18,7 @@ export const Sidebar = styled.div<{ pageVisible?: boolean }>`
     height: 100%;
     order: 2;
     display: block;
+    overflow: scroll;
   }
 `;
 
@@ -137,21 +138,15 @@ export const WorkSpaceItem = styled.div`
   }
 `;
 
-// export const DM = styled(Menu)``;
-// export const DMItem = styled(ChannelItem)<{ dmToggle?: boolean }>`
-//   display: ${props => props.dmToggle && 'none'};
-//   margin-bottom: 0.5em;
-
-//   & > div {
-//     margin-right: 0.5em;
-//   }
-// `;
+export const ScrollbarWrapper = styled.div`
+  height: 100%;
+  overflow: scoll;
+  background-color: #f0e9d2;
+`;
 
 export const Footer = styled.div`
   width: 100%;
   padding: 1em;
-  position: absolute;
-  bottom: 0%;
   background-color: white;
   border-top: 1px solid #e6ddc4;
   ${props => props.theme.flexSet('space-between')};
