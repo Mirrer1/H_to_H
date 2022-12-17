@@ -5,16 +5,18 @@ import { Channels, ChannelHeader, ChannelItem } from '@styles/ComponentsStyle/Wo
 export const DMs = styled(Channels)``;
 export const DMHeader = styled(ChannelHeader)``;
 export const DMItem = styled(ChannelItem)`
-  & > button > div {
-    font-size: 0.6rem;
-    margin-right: 0.7em;
+  & > a > button {
+    font-size: 1.2rem;
   }
+`;
 
-  & > button > p {
-    margin-right: 0.3em;
-  }
+export const Online = styled.div<{ isOnline?: boolean }>`
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background-color: ${props => (props.isOnline ? '#a5d6a7' : '#ff5858')};
 
-  & > button > span {
-    font-weight: 700;
+  & ~ span {
+    margin-left: 0.2em;
   }
 `;

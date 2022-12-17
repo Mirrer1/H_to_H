@@ -3,13 +3,12 @@ import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import useSWR from 'swr';
 
 import fetcher from '@utils/fetcher';
 import useSocket from '@hooks/useSocket';
 import { IUser, IUserWithOnline } from '@typings/db';
-import { DMHeader, DMItem, DMs } from '@styles/ComponentsStyle/Workspace/dmList';
+import { DMHeader, DMItem, DMs, Online } from '@styles/ComponentsStyle/Workspace/dmList';
 
 interface Props {
   setPageVisible: () => void;
@@ -58,17 +57,13 @@ const DMList = ({ setPageVisible }: Props) => {
         <DMItem toggle={toggle}>
           {memberData?.map(member => {
             const isOnline = onlineList.includes(member.id);
-            // const count = countList[member.id] || 0;
+
             return (
               <NavLink key={member.id} to={`/workspace/${workspace}/dm/${member.id}`}>
                 <button onClick={setPageVisible}>
-                  <div>
-                    <FontAwesomeIcon icon={faCircle} />
-                  </div>
+                  <Online isOnline={isOnline}></Online>
                   <p>{member.nickname}</p>
                   {member.id === userData?.id && <span>(Me)</span>}
-                  {isOnline && <span>접속중...</span>}
-                  {/* {count > 0 && <span>{count}</span>} */}
                 </button>
               </NavLink>
             );
