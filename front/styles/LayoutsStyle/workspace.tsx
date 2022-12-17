@@ -11,14 +11,27 @@ export const Container = styled.div`
 `;
 
 export const Sidebar = styled.div<{ pageVisible?: boolean }>`
+  position: relative;
   display: ${props => props.pageVisible && 'none'};
 
   ${media.desktop} {
-    position: relative;
     height: 100%;
+    width: 20%;
     order: 2;
     display: block;
     overflow: scroll;
+  }
+`;
+
+export const HeaderWapper = styled.div`
+  position: fixed;
+  top: 0%;
+  z-index: 5;
+  width: 100%;
+  background-color: #f0e9d2;
+
+  ${media.desktop} {
+    position: relative;
   }
 `;
 
@@ -26,6 +39,7 @@ export const Header = styled.div`
   position: relative;
   width: 100%;
   padding: 1em 1.5em;
+  margin-bottom: 2em;
   ${props => props.theme.flexSet('space-between')};
 
   & > header {
@@ -46,39 +60,17 @@ export const Header = styled.div`
   & > button > img:active {
     opacity: 100%;
   }
-`;
-
-export const SearchWrapper = styled.div`
-  width: 100%;
-  padding: 0 1em;
-  margin-bottom: 3em;
 
   ${media.desktop} {
-    margin-bottom: 1em;
-  }
-`;
+    margin-bottom: 0;
 
-export const Search = styled.label`
-  ${props => props.theme.flexSet('start')};
-  width: 100%;
-  background-color: #e6ddc4;
-  border-radius: 0.4rem;
-  padding: 0.5em;
+    & > header {
+      font-size: 2rem;
+    }
 
-  & > .fa-magnifying-glass {
-    opacity: 50%;
-    margin-right: 0.5em;
-    font-size: 1rem;
-  }
-
-  & > input {
-    border: none;
-    background-color: #e6ddc4;
-    font-size: 1rem;
-  }
-
-  & > input:focus {
-    outline: none;
+    & > button > img {
+      width: 3em;
+    }
   }
 `;
 
@@ -139,12 +131,22 @@ export const WorkSpaceItem = styled.div`
 `;
 
 export const ScrollbarWrapper = styled.div`
+  position: relative;
   height: auto;
   overflow: scoll;
   background-color: #f0e9d2;
+  padding: 12em 0 4em 0;
+
+  ${media.desktop} {
+    padding: 0;
+    height: 85%;
+  }
 `;
 
 export const Footer = styled.div`
+  position: fixed;
+  bottom: 0%;
+  z-index: 5;
   width: 100%;
   padding: 1em;
   background-color: white;
@@ -156,29 +158,12 @@ export const Footer = styled.div`
     font-weight: 700;
   }
 
-  & > button {
-    font-size: 1.2rem;
-    transition: opacity 300ms ease-in-out;
-    ${props => props.theme.flexSet()};
-  }
-
-  & > button:hover {
-    opacity: 40%;
-  }
-
-  & > button:active {
-    opacity: 100%;
-  }
-
   ${media.desktop} {
+    position: relative;
     padding: 1em 0.5em;
     border-right: 1px solid #f0e9d2;
 
     & > div {
-      font-size: 0.8rem;
-    }
-
-    & > button {
       font-size: 1rem;
     }
   }
@@ -192,7 +177,7 @@ export const DesktopWorkspace = styled.div`
     height: 100%;
     background-color: #f0e9d2;
     border-right: 1px solid white;
-    padding: 0 1em;
+    padding: 0 1.5em;
     ${props => props.theme.flexColumnSet()};
   }
 `;
@@ -206,5 +191,7 @@ export const SwitchWrapper = styled.div<{ pageVisible?: boolean }>`
     display: block;
     width: 100%;
     order: 3;
+    overflow: scroll;
+    flex: 1;
   }
 `;

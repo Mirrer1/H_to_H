@@ -2,15 +2,16 @@ import styled from '@emotion/styled';
 import media from '@styles/media';
 
 export const Channels = styled.div`
-  padding-left: 1em;
+  padding-left: 2em;
   margin-bottom: 1em;
 
   ${media.desktop} {
-    padding: 0 2em 0 1em;
+    padding: 0 3em 0 1em;
   }
 `;
 
 export const ChannelHeader = styled.div`
+  margin-bottom: 0.2em;
   ${props => props.theme.flexSet('start')};
 
   & > div {
@@ -19,7 +20,7 @@ export const ChannelHeader = styled.div`
   }
 
   & > p {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 700;
   }
 `;
@@ -29,7 +30,9 @@ export const ChannelItem = styled.div<{ toggle?: boolean }>`
   display: ${props => props.toggle && 'none'};
 
   & > a > button {
+    margin-bottom: 0.3em;
     width: 100%;
+    font-size: 1.1rem;
     transition: opacity 300ms ease-in-out;
     ${props => props.theme.flexSet('start')};
   }

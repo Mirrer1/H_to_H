@@ -4,13 +4,15 @@ import { MentionsInput } from 'react-mentions';
 
 export const Form = styled.form`
   ${({ theme }) => theme.flexSet()};
+  position: fixed;
+  bottom: 0%;
+  z-index: 5;
+  background-color: white;
   color: #495057;
   font-size: 1rem;
   width: 100%;
   padding: 1em 2.5em;
   border-top: 1px solid #f0eff5;
-  position: absolute;
-  bottom: 0%;
 
   & > button {
     padding: 0.8em;

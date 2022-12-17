@@ -2,8 +2,13 @@ import styled from '@emotion/styled';
 import media from '@styles/media';
 
 export const MessageHeader = styled.div`
+  position: fixed;
+  top: 0%;
+  z-index: 5;
+  background-color: white;
   border-bottom: 1px solid #f0eff5;
   padding: 1em;
+  width: 100%;
   ${({ theme }) => theme.flexSet('start')};
 
   & > button {

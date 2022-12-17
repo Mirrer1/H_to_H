@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { faSquarePlus, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { Scrollbars } from 'react-custom-scrollbars';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
@@ -22,9 +21,8 @@ const Message = loadable(() => import('@pages/message'));
 import {
   Container,
   Sidebar,
+  HeaderWapper,
   Header,
-  SearchWrapper,
-  Search,
   WorkSpaceWrapper,
   WorkSpace,
   WorkSpaceItem,
@@ -88,41 +86,38 @@ const Workspace = () => {
   return (
     <Container>
       <Sidebar pageVisible={pageVisible}>
-        <Header>
-          <header>H to H</header>
-          <button onClick={onClickProfile}>
-            <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
-          </button>
+        <HeaderWapper>
+          <Header>
+            <header>H to H</header>
+            <button onClick={onClickProfile}>
+              <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
+            </button>
 
-          {profileVisible && <Profile onClickProfile={onClickProfile} />}
-        </Header>
-        <SearchWrapper>
-          <Search id="search-label">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-            <input type="text" placeholder="Search messages or users" />
-          </Search>
-        </SearchWrapper>
-        <WorkSpaceWrapper>
-          {userData.Workspaces?.map(ws => {
-            return (
-              <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
-                <WorkSpace>
-                  <WorkSpaceItem>
-                    <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
-                    <p>{ws.name}</p>
-                  </WorkSpaceItem>
-                </WorkSpace>
-              </Link>
-            );
-          })}
+            {profileVisible && <Profile onClickProfile={onClickProfile} />}
+          </Header>
 
-          <WorkSpace onClick={onClickCreateWorkspace}>
-            <FontAwesomeIcon icon={faSquarePlus} />
-          </WorkSpace>
-          {createWorkspaceVisible && (
-            <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
-          )}
-        </WorkSpaceWrapper>
+          <WorkSpaceWrapper>
+            {userData.Workspaces?.map(ws => {
+              return (
+                <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
+                  <WorkSpace>
+                    <WorkSpaceItem>
+                      <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
+                      <p>{ws.name}</p>
+                    </WorkSpaceItem>
+                  </WorkSpace>
+                </Link>
+              );
+            })}
+
+            <WorkSpace onClick={onClickCreateWorkspace}>
+              <FontAwesomeIcon icon={faSquarePlus} />
+            </WorkSpace>
+            {createWorkspaceVisible && (
+              <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
+            )}
+          </WorkSpaceWrapper>
+        </HeaderWapper>
 
         <ScrollbarWrapper>
           <Scrollbars autoHide>
@@ -133,9 +128,6 @@ const Workspace = () => {
 
         <Footer>
           <div>NodeJS KR Developer Group</div>
-          <button>
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </button>
         </Footer>
       </Sidebar>
 

@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import regexifyString from 'regexify-string';
 
 import { IDM, IChat } from '@typings/db';
+import { ChatWrapper, ChatInfo, ChatContent } from '@styles/ComponentsStyle/Dialog/chat';
 
 interface Props {
   data: IDM | IChat;
@@ -34,13 +35,17 @@ const Chat = ({ data }: Props) => {
     [data.content],
   );
   return (
-    <>
-      <img src={gravatar.url(user.email, { d: 'mm' })} alt={user.nickname} />
-      <div>{user.nickname}</div>
+    <ChatWrapper>
+      <ChatInfo>
+        <img src={gravatar.url(user.email, { d: 'mm' })} alt={user.nickname} />
+        <p>{user.nickname}</p>
+      </ChatInfo>
 
-      <span>{dayjs(data.createdAt).format('h:mm A')}</span>
-      <p>{result}</p>
-    </>
+      <ChatContent>
+        <p>{result}</p>
+        <div>{dayjs(data.createdAt).format('h:mm A')}</div>
+      </ChatContent>
+    </ChatWrapper>
   );
 };
 
