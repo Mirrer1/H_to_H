@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { useParams } from 'react-router';
-import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions';
+import { Mention, SuggestionDataItem } from 'react-mentions';
 import autosize from 'autosize';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
 
 import fetcher from '@utils/fetcher';
 import { IUser } from '@typings/db';
-import styled from '@emotion/styled';
+import { Form, MentionsTextarea, UserSuggestion } from '@styles/ComponentsStyle/Dialog/chatBox';
 
 interface Props {
   chat: string;
@@ -15,9 +17,6 @@ interface Props {
   onChangeChat: (e: any) => void;
   placeholder?: string;
 }
-
-// 스타일 파일로 분리
-const MentionsTextarea = styled(MentionsInput)``;
 
 const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
   const textareaRef = useRef(null);
@@ -57,12 +56,10 @@ const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
       if (!memberData) return;
 
       return (
-        <button>
-          {/* focus를 props로 전달해서 선택된거는 다른 스타일 사용 */}
-
+        <UserSuggestion focus={focus}>
           <img src={gravatar.url(memberData[index].email, { d: 'mm' })} alt={memberData[index].nickname} />
           <span>{highlightedDisplay}</span>
-        </button>
+        </UserSuggestion>
       );
     },
     [],
@@ -70,18 +67,17 @@ const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
 
   return (
     <>
-      <form onSubmit={onSubmitForm}>
+      <Form onSubmit={onSubmitForm}>
         <MentionsTextarea
           value={chat}
           onChange={onChangeChat}
           onKeyDown={onKeydownChat}
           id="editor-chat"
-          placeholder={placeholder}
+          // placeholder={placeholder}
+          placeholder="Enter Message..."
           inputRef={textareaRef}
           allowSuggestionsAboveCursor
-          // 목록 아래로 나오는 문제 제로초 멘션기능만들기 질문창 참고
         >
-          {/* Mention의 부모는 MentionsInput이여야한다. */}
           <Mention
             appendSpaceOnAdd
             trigger="@"
@@ -89,8 +85,11 @@ const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
             renderSuggestion={renderSuggestion}
           />
         </MentionsTextarea>
-        <button type="submit">전송</button>
-      </form>
+
+        <button type="submit">
+          <FontAwesomeIcon icon={faPaperPlane} />
+        </button>
+      </Form>
     </>
   );
 };

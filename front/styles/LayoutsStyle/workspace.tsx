@@ -139,7 +139,7 @@ export const WorkSpaceItem = styled.div`
 `;
 
 export const ScrollbarWrapper = styled.div`
-  height: 100%;
+  height: auto;
   overflow: scoll;
   background-color: #f0e9d2;
 `;

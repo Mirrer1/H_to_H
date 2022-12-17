@@ -162,10 +162,6 @@ const Workspace = () => {
       </DesktopWorkspace>
 
       <SwitchWrapper pageVisible={pageVisible}>
-        {/* <button onClick={onClickReturnPage}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button> */}
-
         <Switch>
           <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
           <Route
