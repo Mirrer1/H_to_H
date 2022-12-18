@@ -155,7 +155,10 @@ const Workspace = () => {
 
       <SwitchWrapper pageVisible={pageVisible}>
         <Switch>
-          <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
+          <Route
+            path="/workspace/:workspace/channel/:channel"
+            component={() => <Channel onClickReturnPage={onClickReturnPage} />}
+          />
           <Route
             path="/workspace/:workspace/dm/:id"
             component={() => <Message onClickReturnPage={onClickReturnPage} />}
