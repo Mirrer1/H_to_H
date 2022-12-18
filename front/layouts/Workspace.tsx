@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { Scrollbars } from 'react-custom-scrollbars';
 import useSWR from 'swr';
-import gravatar from 'gravatar';
 import loadable from '@loadable/component';
 
 import { IUser, IChannel } from '@typings/db';
@@ -22,7 +21,6 @@ import {
   Container,
   Sidebar,
   HeaderWapper,
-  Header,
   WorkSpaceWrapper,
   WorkSpace,
   WorkSpaceItem,
@@ -32,6 +30,7 @@ import {
   ScrollbarWrapper,
 } from '@styles/LayoutsStyle/workspace';
 import useSocket from '@hooks/useSocket';
+import Heading from '@components/WorkSpace/Heading';
 
 const Workspace = () => {
   const { workspace } = useParams<{ workspace: string }>();
@@ -87,14 +86,8 @@ const Workspace = () => {
     <Container>
       <Sidebar pageVisible={pageVisible}>
         <HeaderWapper>
-          <Header>
-            <header>H to H</header>
-            <button onClick={onClickProfile}>
-              <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
-            </button>
-
-            {profileVisible && <Profile onClickProfile={onClickProfile} />}
-          </Header>
+          <Heading onClickProfile={onClickProfile} />
+          {profileVisible && <Profile onClickProfile={onClickProfile} />}
 
           <WorkSpaceWrapper>
             {userData.Workspaces?.map(ws => {

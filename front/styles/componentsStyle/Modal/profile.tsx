@@ -7,7 +7,7 @@ export const ProfileWrapper = styled.div`
   position: absolute;
   border: 1px solid white;
   border-radius: 0.5rem;
-  top: 80%;
+  top: 40%;
   right: 5%;
   z-index: 5;
   padding: 0.5em 1em;
@@ -30,8 +30,10 @@ export const ProfileWrapper = styled.div`
   }
 
   ${media.desktop} {
-    top: 85%;
-    right: -95%;
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    right: 0%;
     width: 18em;
     padding: 1em 1.5em 0.5em 1.5em;
 
