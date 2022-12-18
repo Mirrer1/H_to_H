@@ -30,9 +30,9 @@ export const ChatInfo = styled.div`
 `;
 
 export const ChatContent = styled.div`
-  background-color: #e6ddc4;
   width: 40%;
-  color: white;
+  color: #3c4048;
+  border: 1px solid #e6ddc4;
   border-radius: 0.5rem;
   padding: 0.5em 1em;
   margin: 0.5em 0 0 2em;

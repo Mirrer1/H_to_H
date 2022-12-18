@@ -99,7 +99,7 @@ const Workspace = () => {
           <WorkSpaceWrapper>
             {userData.Workspaces?.map(ws => {
               return (
-                <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
+                <Link key={ws.id} to={`/workspace/${ws.url}/channel/일반`}>
                   <WorkSpace>
                     <WorkSpaceItem>
                       <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
@@ -134,7 +134,7 @@ const Workspace = () => {
       <DesktopWorkspace>
         {userData.Workspaces?.map(ws => {
           return (
-            <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
+            <Link key={ws.id} to={`/workspace/${ws.url}/channel/일반`}>
               <WorkSpace>
                 <WorkSpaceItem>
                   <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>

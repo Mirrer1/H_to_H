@@ -9,8 +9,8 @@ import axios from 'axios';
 import useInput from '@hooks/useInput';
 import fetcher from '@utils/fetcher';
 import { IUser } from '@typings/db';
+import { InviteForm } from '@styles/ComponentsStyle/Modal/inviteChannel';
 import {
-  CreateForm,
   CreateFormBtn,
   CreateFormItem,
   CreateWrapper,
@@ -18,11 +18,10 @@ import {
 } from '@styles/ComponentsStyle/Modal/createWorkspace';
 
 interface Props {
-  setInviteChannelVisible: () => void;
-  onClickProfile: () => void;
+  onClickInviteChannel: () => void;
 }
 
-const InviteChannel = ({ setInviteChannelVisible, onClickProfile }: Props) => {
+const InviteChannel = ({ onClickInviteChannel }: Props) => {
   const [newMember, onChangeNewMember, setNewMember] = useInput('');
   const { workspace, channel } = useParams<{ workspace: string; channel: string }>();
 
@@ -55,8 +54,6 @@ const InviteChannel = ({ setInviteChannelVisible, onClickProfile }: Props) => {
         .then(() => {
           setNewMember('');
           revalidateMembers();
-          setInviteChannelVisible();
-          onClickProfile();
         })
         .catch(error => {
           console.dir(error);
@@ -67,22 +64,20 @@ const InviteChannel = ({ setInviteChannelVisible, onClickProfile }: Props) => {
   );
   return (
     <CreateWrapper>
-      <CreateXBtn onClick={setInviteChannelVisible}>
+      <CreateXBtn onClick={onClickInviteChannel}>
         <FontAwesomeIcon icon={faXmark} />
       </CreateXBtn>
 
-      <CreateForm>
-        <form onSubmit={onInviteMember}>
-          <CreateFormItem id="member-label">
-            <div>채널 멤버 초대</div>
-            <input id="member" value={newMember} onChange={onChangeNewMember} />
-          </CreateFormItem>
+      <InviteForm onSubmit={onInviteMember}>
+        <CreateFormItem id="member-label">
+          <div>채널 멤버 초대</div>
+          <input id="member" value={newMember} onChange={onChangeNewMember} />
+        </CreateFormItem>
 
-          <CreateFormBtn type="submit" mainBtn>
-            초대
-          </CreateFormBtn>
-        </form>
-      </CreateForm>
+        <CreateFormBtn type="submit" mainBtn>
+          초대
+        </CreateFormBtn>
+      </InviteForm>
     </CreateWrapper>
   );
 };

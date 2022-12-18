@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import useSWR, { useSWRInfinite } from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Scrollbars from 'react-custom-scrollbars';
 import axios from 'axios';
 
@@ -12,9 +12,9 @@ import ChatBox from '@components/Dialog/ChatBox';
 import fetcher from '@utils/fetcher';
 import useSocket from '@hooks/useSocket';
 import makeSection from '@utils/makeSection';
-import { IChat, IUser, IChannel } from '@typings/db';
-import { MessageHeader } from '@styles/PageStyle/message';
 import InviteChannel from '@components/Modal/InviteChannel';
+import { IChat, IUser, IChannel } from '@typings/db';
+import { ChannelPageHeader, ChannelPageName, ChannelPageInfo } from '@styles/PageStyle/channel';
 
 interface Props {
   onClickReturnPage: () => void;
@@ -24,6 +24,7 @@ const Channel = ({ onClickReturnPage }: Props) => {
   const { workspace, channel } = useParams<{ workspace: string; channel: string }>();
   const scrollbarRef = useRef<Scrollbars>(null);
   const [chat, onChangeChat, setChat] = useInput('');
+  const [inviteChannelVisible, setInviteChannelVisible] = useState(false);
 
   const { data: myData } = useSWR('/api/users', fetcher);
   const { data: channelData } = useSWR<IChannel>(`/api/workspaces/${workspace}/channels/${channel}`, fetcher);
@@ -44,6 +45,10 @@ const Channel = ({ onClickReturnPage }: Props) => {
   const [socket] = useSocket(workspace);
   const isEmpty = chatData?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (chatData && chatData[chatData.length - 1]?.length < 20) || false;
+
+  const onClickInviteChannel = useCallback(() => {
+    setInviteChannelVisible(prev => !prev);
+  }, []);
 
   const onSubmitForm = useCallback(
     e => {
@@ -116,28 +121,32 @@ const Channel = ({ onClickReturnPage }: Props) => {
     }
   }, [chatData]);
 
-  const onClickInviteChannel = useCallback(() => {}, []);
-
   if (!myData) return null;
 
   const chatSections = makeSection(chatData ? chatData.flat().reverse() : []);
 
   return (
     <>
-      <MessageHeader>
-        <button onClick={onClickReturnPage}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
+      <ChannelPageHeader>
+        <ChannelPageName>
+          <button onClick={onClickReturnPage}>
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
 
-        <p>#{channel}</p>
-        <p>{channelMembersData?.length}</p>
-        <button onClick={onClickInviteChannel}>채널에 사람 추가 버튼</button>
-      </MessageHeader>
+          <h1># {channel}</h1>
+        </ChannelPageName>
 
+        <ChannelPageInfo>
+          <p>{channelMembersData?.length}</p>
+          <button onClick={onClickInviteChannel}>
+            <FontAwesomeIcon icon={faUserPlus} />
+          </button>
+        </ChannelPageInfo>
+      </ChannelPageHeader>
+
+      {inviteChannelVisible && <InviteChannel onClickInviteChannel={onClickInviteChannel} />}
       <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
-
-      {/* <InviteChannel />  props구현*/}
     </>
   );
 };
