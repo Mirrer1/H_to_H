@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
-import { Switch, Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import useSWR from 'swr';
-import loadable from '@loadable/component';
 
 import fetcher from '@utils/fetcher';
 import Profile from '@components/Modal/Profile';
@@ -23,9 +21,7 @@ import {
   SwitchWrapper,
   ScrollbarWrapper,
 } from '@styles/LayoutsStyle/workspace';
-
-const Channel = loadable(() => import('@pages/channel'));
-const Message = loadable(() => import('@pages/message'));
+import Switcher from '@components/WorkSpace/Switcher';
 
 const Workspace = () => {
   const { workspace } = useParams<{ workspace: string }>();
@@ -42,7 +38,6 @@ const Workspace = () => {
   } = useSWR<IUser | false>('/api/users', fetcher, {
     dedupingInterval: 2000,
   });
-
   const { data: channelData } = useSWR<IChannel[]>(userData ? `/api/workspaces/${workspace}/channels` : null, fetcher);
 
   useEffect(() => {
@@ -108,16 +103,7 @@ const Workspace = () => {
       )}
 
       <SwitchWrapper pageVisible={pageVisible}>
-        <Switch>
-          <Route
-            path="/workspace/:workspace/channel/:channel"
-            component={() => <Channel onClickReturnPage={onClickReturnPage} />}
-          />
-          <Route
-            path="/workspace/:workspace/dm/:id"
-            component={() => <Message onClickReturnPage={onClickReturnPage} />}
-          />
-        </Switch>
+        <Switcher onClickReturnPage={onClickReturnPage} />
       </SwitchWrapper>
     </Container>
   );
