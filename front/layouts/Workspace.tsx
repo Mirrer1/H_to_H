@@ -127,7 +127,7 @@ const Workspace = () => {
         </ScrollbarWrapper>
 
         <Footer>
-          <div>NodeJS KR Developer Group</div>
+          <div>{workspace}</div>
         </Footer>
       </Sidebar>
 

@@ -164,7 +164,7 @@ export const Footer = styled.div`
     border-right: 1px solid #f0e9d2;
 
     & > div {
-      font-size: 1rem;
+      font-size: 1.5rem;
     }
   }
 `;
