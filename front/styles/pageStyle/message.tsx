@@ -37,7 +37,7 @@ export const MessageHeader = styled.div`
 
   ${media.desktop} {
     padding: 1.5em;
-    z-index: 0;
+    z-index: 2;
 
     & > button {
       display: none;
