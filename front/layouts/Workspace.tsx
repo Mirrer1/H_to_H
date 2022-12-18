@@ -1,36 +1,31 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
-import { Switch, Route, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import { Switch, Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import useSWR from 'swr';
 import loadable from '@loadable/component';
 
-import { IUser, IChannel } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import Profile from '@components/Modal/Profile';
 import CreateWorkspace from '@components/Modal/CreateWorkspace';
 import ChannelList from '@components/WorkSpace/ChannelList';
 import DMList from '@components/WorkSpace/DMList';
-
-const Channel = loadable(() => import('@pages/channel'));
-const Message = loadable(() => import('@pages/message'));
-
+import useSocket from '@hooks/useSocket';
+import Heading from '@components/WorkSpace/Heading';
+import WorkspaceList from '@components/WorkSpace/WorkspaceList';
+import DesktopWorkspace from '@components/WorkSpace/DesktopWorkspace';
+import { IUser, IChannel } from '@typings/db';
 import {
   Container,
   Sidebar,
   HeaderWapper,
-  WorkSpaceWrapper,
-  WorkSpace,
-  WorkSpaceItem,
   Footer,
-  DesktopWorkspace,
   SwitchWrapper,
   ScrollbarWrapper,
 } from '@styles/LayoutsStyle/workspace';
-import useSocket from '@hooks/useSocket';
-import Heading from '@components/WorkSpace/Heading';
+
+const Channel = loadable(() => import('@pages/channel'));
+const Message = loadable(() => import('@pages/message'));
 
 const Workspace = () => {
   const { workspace } = useParams<{ workspace: string }>();
@@ -89,27 +84,10 @@ const Workspace = () => {
           <Heading onClickProfile={onClickProfile} />
           {profileVisible && <Profile onClickProfile={onClickProfile} />}
 
-          <WorkSpaceWrapper>
-            {userData.Workspaces?.map(ws => {
-              return (
-                <Link key={ws.id} to={`/workspace/${ws.url}/channel/일반`}>
-                  <WorkSpace>
-                    <WorkSpaceItem>
-                      <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
-                      <p>{ws.name}</p>
-                    </WorkSpaceItem>
-                  </WorkSpace>
-                </Link>
-              );
-            })}
-
-            <WorkSpace onClick={onClickCreateWorkspace}>
-              <FontAwesomeIcon icon={faSquarePlus} />
-            </WorkSpace>
-            {createWorkspaceVisible && (
-              <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
-            )}
-          </WorkSpaceWrapper>
+          <WorkspaceList onClickCreateWorkspace={onClickCreateWorkspace} />
+          {createWorkspaceVisible && (
+            <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
+          )}
         </HeaderWapper>
 
         <ScrollbarWrapper>
@@ -124,27 +102,10 @@ const Workspace = () => {
         </Footer>
       </Sidebar>
 
-      <DesktopWorkspace>
-        {userData.Workspaces?.map(ws => {
-          return (
-            <Link key={ws.id} to={`/workspace/${ws.url}/channel/일반`}>
-              <WorkSpace>
-                <WorkSpaceItem>
-                  <h2>{ws.name.slice(0, 1).toUpperCase()}</h2>
-                  <p>{ws.name}</p>
-                </WorkSpaceItem>
-              </WorkSpace>
-            </Link>
-          );
-        })}
-
-        <WorkSpace onClick={onClickCreateWorkspace}>
-          <FontAwesomeIcon icon={faSquarePlus} />
-        </WorkSpace>
-        {createWorkspaceVisible && (
-          <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
-        )}
-      </DesktopWorkspace>
+      <DesktopWorkspace onClickCreateWorkspace={onClickCreateWorkspace} />
+      {createWorkspaceVisible && (
+        <CreateWorkspace setCreateWorkspaceVisible={onClickCreateWorkspace} revalidate={revalidate} />
+      )}
 
       <SwitchWrapper pageVisible={pageVisible}>
         <Switch>

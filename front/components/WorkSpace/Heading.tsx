@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import gravatar from 'gravatar';
 
 import fetcher from '@utils/fetcher';
-import { Header } from '@styles/LayoutsStyle/workspace';
+import { Header } from '@styles/ComponentsStyle/Workspace/heading';
 import { IUser } from '@typings/db';
 
 interface Props {
