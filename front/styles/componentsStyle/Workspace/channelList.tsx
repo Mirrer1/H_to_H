@@ -26,7 +26,12 @@ export const ChannelHeader = styled.div`
 `;
 
 export const ChannelItem = styled.div<{ toggle?: boolean }>`
+  padding-left: 1em;
   display: ${props => props.toggle && 'none'};
+
+  ${media.desktop} {
+    padding-left: 0.5em;
+  }
 `;
 
 export const ChannelItemLink = styled.button`
@@ -63,7 +68,7 @@ export const ChannelItemLink = styled.button`
   }
 
   & > span {
-    width: 2em;
+    width: 2.5em;
     font-weight: 700;
     text-align: center;
     color: white;
@@ -73,7 +78,7 @@ export const ChannelItemLink = styled.button`
 
   ${media.desktop} {
     & > span {
-      width: 2.5em;
+      width: 2em;
     }
   }
 `;

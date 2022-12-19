@@ -5,11 +5,7 @@ import { Channels, ChannelHeader, ChannelItem, ChannelItemLink } from '@styles/C
 
 export const DMs = styled(Channels)``;
 export const DMHeader = styled(ChannelHeader)``;
-export const DMItem = styled(ChannelItem)`
-  & > a > button {
-    font-size: 1.2rem;
-  }
-`;
+export const DMItem = styled(ChannelItem)``;
 
 export const DMItemLink = styled(ChannelItemLink)`
   & > div > p {
