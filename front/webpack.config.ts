@@ -91,6 +91,11 @@ const config: Configuration = {
       },
     },
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
 };
 
 if (isDevelopment && config.plugins) {
