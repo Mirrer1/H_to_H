@@ -1,12 +1,23 @@
 import styled from '@emotion/styled';
+import media from '@styles/media';
 
-import { Channels, ChannelHeader, ChannelItem } from '@styles/ComponentsStyle/Workspace/channelList';
+import { Channels, ChannelHeader, ChannelItem, ChannelItemLink } from '@styles/ComponentsStyle/Workspace/channelList';
 
 export const DMs = styled(Channels)``;
 export const DMHeader = styled(ChannelHeader)``;
 export const DMItem = styled(ChannelItem)`
   & > a > button {
     font-size: 1.2rem;
+  }
+`;
+
+export const DMItemLink = styled(ChannelItemLink)`
+  & > div > p {
+    margin-right: 0;
+  }
+
+  & > div > span {
+    font-weight: 700;
   }
 `;
 

@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import useSWR from 'swr';
 
+import EachDM from './EachDM';
 import fetcher from '@utils/fetcher';
 import useSocket from '@hooks/useSocket';
 import { IUser, IUserWithOnline } from '@typings/db';
-import { DMHeader, DMItem, DMs, Online } from '@styles/ComponentsStyle/Workspace/dmList';
+import { DMHeader, DMItem, DMs } from '@styles/ComponentsStyle/Workspace/dmList';
 
 interface Props {
   setPageVisible: () => void;
@@ -58,16 +58,7 @@ const DMList = ({ setPageVisible }: Props) => {
         <DMItem toggle={toggle}>
           {memberData?.map(member => {
             const isOnline = onlineList.includes(member.id);
-
-            return (
-              <NavLink key={member.id} to={`/workspace/${workspace}/dm/${member.id}`}>
-                <button onClick={setPageVisible}>
-                  <Online isOnline={isOnline}></Online>
-                  <p>{member.nickname}</p>
-                  {member.id === userData?.id && <span>(Me)</span>}
-                </button>
-              </NavLink>
-            );
+            return <EachDM key={member.id} member={member} isOnline={isOnline} setPageVisible={setPageVisible} />;
           })}
         </DMItem>
       </DMs>

@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import media from '@styles/media';
 
 export const Channels = styled.div`
-  padding-left: 2em;
+  padding: 0 2em;
   margin-bottom: 1em;
 
   ${media.desktop} {
-    padding: 0 3em 0 1em;
+    padding: 0 1em;
   }
 `;
 
@@ -26,32 +26,54 @@ export const ChannelHeader = styled.div`
 `;
 
 export const ChannelItem = styled.div<{ toggle?: boolean }>`
-  padding-left: 1em;
   display: ${props => props.toggle && 'none'};
+`;
 
-  & > a > button {
-    margin-bottom: 0.3em;
-    width: 100%;
-    font-size: 1.1rem;
-    transition: opacity 300ms ease-in-out;
-    ${({ theme }) => theme.flexSet('start')};
-  }
+export const ChannelItemLink = styled.button`
+  width: 100%;
+  font-size: 1.1rem;
+  margin-bottom: 0.3em;
+  transition: opacity 300ms ease-in-out;
+  ${({ theme }) => theme.flexSet('space-between')};
 
-  & > a > button > div {
-    margin-right: 0.5em;
-  }
-
-  & > a > button:hover {
+  &:hover {
     opacity: 40%;
   }
 
-  & > a > button:active {
+  &:active {
     opacity: 100%;
   }
 
-  & > a > button:focus {
+  &:focus {
     background-color: #e6ddc4;
     transform: scale(1.05);
     font-weight: 700;
+  }
+
+  & > div {
+    ${({ theme }) => theme.flexSet()};
+  }
+
+  & > div > div {
+    margin-right: 0.5em;
+  }
+
+  & > div > p {
+    margin-right: 0.5em;
+  }
+
+  & > span {
+    width: 2em;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+    background-color: #808080;
+    border-radius: 0.5rem;
+  }
+
+  ${media.desktop} {
+    & > span {
+      width: 2.5em;
+    }
   }
 `;

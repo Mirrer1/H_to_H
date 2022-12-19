@@ -70,8 +70,12 @@ const Channel = ({ onClickReturnPage }: Props) => {
           });
           return prevChatData;
         }, false).then(() => {
+          localStorage.setItem(`${workspace}-${channel}`, new Date().getTime().toString());
           setChat('');
-          scrollbarRef.current?.scrollToBottom();
+          if (scrollbarRef.current) {
+            console.log('scrollToBottom!', scrollbarRef.current?.getValues());
+            scrollbarRef.current.scrollToBottom();
+          }
         });
 
         axios
@@ -122,6 +126,10 @@ const Channel = ({ onClickReturnPage }: Props) => {
       scrollbarRef.current?.scrollToBottom();
     }
   }, [chatData]);
+
+  useEffect(() => {
+    localStorage.setItem(`${workspace}-${channel}`, new Date().getTime().toString());
+  }, [workspace, channel]);
 
   const onDrop = useCallback(
     e => {

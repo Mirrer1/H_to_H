@@ -61,8 +61,12 @@ const Message = ({ onClickReturnPage }: Props) => {
           });
           return prevChatData;
         }, false).then(() => {
+          localStorage.setItem(`${workspace}-${id}`, new Date().getTime().toString());
           setChat('');
-          scrollbarRef.current?.scrollToBottom();
+          if (scrollbarRef.current) {
+            console.log('scrollToBottom!', scrollbarRef.current?.getValues());
+            scrollbarRef.current.scrollToBottom();
+          }
         });
 
         axios
@@ -104,6 +108,10 @@ const Message = ({ onClickReturnPage }: Props) => {
       socket?.off('dm', onMessage);
     };
   }, [socket, onMessage]);
+
+  useEffect(() => {
+    localStorage.setItem(`${workspace}-${id}`, new Date().getTime().toString());
+  }, [workspace, id]);
 
   useEffect(() => {
     if (chatData?.length === 1) {

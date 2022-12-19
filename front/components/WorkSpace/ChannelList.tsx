@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 
+import EachChannel from './EachChannel';
 import fetcher from '@utils/fetcher';
 import { IChannel, IUser } from '@typings/db';
 import { Channels, ChannelHeader, ChannelItem } from '@styles/ComponentsStyle/Workspace/channelList';
@@ -35,14 +35,7 @@ const ChannelList = ({ setPageVisible }: Props) => {
 
       <ChannelItem toggle={toggle}>
         {channelData?.map(channel => {
-          return (
-            <NavLink key={channel.id} to={`/workspace/${workspace}/channel/${channel.name}`}>
-              <button key={channel.id} onClick={setPageVisible}>
-                <div>#</div>
-                <p>{channel.name}</p>
-              </button>
-            </NavLink>
-          );
+          return <EachChannel key={channel.id} channel={channel} setPageVisible={setPageVisible} />;
         })}
       </ChannelItem>
     </Channels>
