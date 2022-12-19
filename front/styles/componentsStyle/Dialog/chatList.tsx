@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
+import media from '@styles/media';
 
 export const ChatListWrapper = styled.section`
   height: auto;
-  padding: 2.5em 0;
+  padding: 1em 0;
+  margin: 4em 0;
+
+  ${media.desktop} {
+    margin: 5.5em 0;
+  }
 `;
 
 export const ChatTimeLine = styled.div`
@@ -12,11 +18,11 @@ export const ChatTimeLine = styled.div`
 
   & > button {
     position: relative;
-    z-index: 5;
     background-color: #f0eff5;
     font-size: 0.8rem;
     padding: 0.5em 3em;
     border-radius: 0.5rem;
+    z-index: 1;
   }
 
   & > div {

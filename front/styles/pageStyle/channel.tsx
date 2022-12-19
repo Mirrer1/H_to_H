@@ -16,7 +16,7 @@ export const ChannelPageHeader = styled.div`
   }
 
   ${media.desktop} {
-    z-index: 0;
+    z-index: 1;
     width: -webkit-fill-available;
     padding: 1.5em 2.5em 1.5em 1.5em;
   }
