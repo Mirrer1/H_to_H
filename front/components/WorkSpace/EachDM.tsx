@@ -41,7 +41,7 @@ const EachDM = ({ member, isOnline, setPageVisible }: Props) => {
           {member.id === userData?.id && <span>(Me)</span>}
         </div>
 
-        <span>{count}</span>
+        <span>{count && (count > 100 ? +99 : count)}</span>
       </DMItemLink>
     </NavLink>
   );

@@ -39,7 +39,7 @@ const EachChannel = ({ channel, setPageVisible }: Props) => {
           <p>{channel.name}</p>
         </div>
 
-        <span>{count}</span>
+        <span>{count && (count > 100 ? +99 : count)}</span>
       </ChannelItemLink>
     </NavLink>
   );
