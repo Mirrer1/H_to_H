@@ -9,7 +9,7 @@ export const ErrorWrapper = styled(SuccessWrapper)<{ visible?: boolean }>`
   & > .fa-triangle-exclamation {
     font-size: 4em;
     margin-bottom: 0.3em;
-    color: ${props => props.theme.colors.warning};
+    color: ${({ theme }) => theme.colors.warning};
   }
 
   ${media.desktop} {

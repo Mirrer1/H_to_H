@@ -29,7 +29,7 @@ export const SignupFormItem = styled(FormItem)`
 
 export const AgreeCheck = styled.div`
   cursor: pointer;
-  ${props => props.theme.flexSet()};
+  ${({ theme }) => theme.flexSet()};
 
   & > input {
     cursor: pointer;
@@ -70,7 +70,7 @@ export const FormError = styled.div<{ error?: boolean }>`
   font-weight: 700;
   margin-bottom: 1em;
   visibility: ${props => (props.error ? 'visible' : 'hidden')};
-  color: ${props => props.theme.colors.error};
+  color: ${({ theme }) => theme.colors.error};
 
   ${media.desktop} {
     font-size: 0.8rem;

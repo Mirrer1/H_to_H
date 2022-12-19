@@ -6,7 +6,7 @@ export const Header = styled.div`
   width: 100%;
   padding: 1em 1.5em;
   margin-bottom: 2em;
-  ${props => props.theme.flexSet('space-between')};
+  ${({ theme }) => theme.flexSet('space-between')};
 
   & > header {
     font-size: 2rem;

@@ -6,7 +6,7 @@ export const Container = styled.div`
   background-color: #f0e9d2;
 
   ${media.desktop} {
-    ${props => props.theme.flexSet('start')};
+    ${({ theme }) => theme.flexSet('start')};
   }
 `;
 
@@ -56,7 +56,7 @@ export const Footer = styled.div`
   padding: 1em;
   background-color: white;
   border-top: 1px solid #e6ddc4;
-  ${props => props.theme.flexSet('space-between')};
+  ${({ theme }) => theme.flexSet('space-between')};
 
   & > div {
     font-size: 1.2rem;

@@ -46,7 +46,7 @@ export const ProfileWrapper = styled.div`
 export const ProfileContent = styled.div`
   border-bottom: 1px solid white;
   padding-bottom: 0.5em;
-  ${props => props.theme.flexSet('start')};
+  ${({ theme }) => theme.flexSet('start')};
 
   & > img {
     width: 4em;
@@ -79,7 +79,7 @@ export const ProfileContent = styled.div`
 export const ProfileBtn = styled.div`
   text-align: center;
   padding-top: 0.5em;
-  ${props => props.theme.flexColumnSet()};
+  ${({ theme }) => theme.flexColumnSet()};
 
   & > button {
     width: 100%;

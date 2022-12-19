@@ -12,12 +12,12 @@ export const SuccessWrapper = styled.div<{ visible?: boolean }>`
   background-color: #ffffff;
   border: 1px solid #eeeeee;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  ${props => props.theme.flexColumnSet()};
+  ${({ theme }) => theme.flexColumnSet()};
 
   & > .fa-circle-check {
     font-size: 4em;
     margin-bottom: 0.3em;
-    color: ${props => props.theme.colors.success};
+    color: ${({ theme }) => theme.colors.success};
   }
 
   & > header {
@@ -50,7 +50,8 @@ export const SuccessWrapper = styled.div<{ visible?: boolean }>`
 export const SuccessBtn = styled.button`
   font-size: 0.8rem;
   color: white;
-  background-color: ${props => props.theme.colors.primaryLight};
+  background-color: ${({ theme }) => theme.colors.primaryLight};
+
   border-radius: 15px;
   padding: 0.5em 0.7em;
   transition: opacity 300ms ease-in-out, box-shadow 150ms ease-in-out;

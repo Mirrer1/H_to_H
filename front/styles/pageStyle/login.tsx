@@ -3,7 +3,7 @@ import media from '@styles/media';
 
 export const FormWrapper = styled.div`
   height: 100%;
-  ${props => props.theme.flexColumnSet('space-between')};
+  ${({ theme }) => theme.flexColumnSet('space-between')};
 
   ${media.desktop} {
     flex-direction: row;
@@ -13,7 +13,7 @@ export const FormWrapper = styled.div`
 export const Form = styled.div`
   text-align: center;
   margin: auto 0;
-  ${props => props.theme.flexColumnSet()};
+  ${({ theme }) => theme.flexColumnSet()};
 
   & > header {
     font-size: 1.5rem;
@@ -99,7 +99,7 @@ export const FormImage = styled.div`
   height: 60%;
   overflow: hidden;
   text-align: center;
-  ${props => props.theme.flexColumnSet()};
+  ${({ theme }) => theme.flexColumnSet()};
 
   & > img {
     width: 100%;

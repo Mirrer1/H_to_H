@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import media from '@styles/media';
 
-import { FormItem } from '@styles/PageStyle/login';
-import { CreateFormItem, CreateWrapper, CreateXBtn, CreateFormBtn } from './createWorkspace';
+import { CreateWrapper } from './createWorkspace';
 
 export const InviteWrapper = styled(CreateWrapper)``;
 

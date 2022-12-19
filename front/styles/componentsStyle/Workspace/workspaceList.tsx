@@ -6,7 +6,7 @@ export const WorkSpaceWrapper = styled.div`
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 1px solid white;
-  ${props => props.theme.flexSet('space-around')};
+  ${({ theme }) => theme.flexSet('space-around')};
 
   ${media.desktop} {
     display: none;

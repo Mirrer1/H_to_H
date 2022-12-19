@@ -12,7 +12,7 @@ export const Channels = styled.div`
 
 export const ChannelHeader = styled.div`
   margin-bottom: 0.2em;
-  ${props => props.theme.flexSet('start')};
+  ${({ theme }) => theme.flexSet('start')};
 
   & > div {
     width: 1em;
@@ -34,7 +34,7 @@ export const ChannelItem = styled.div<{ toggle?: boolean }>`
     width: 100%;
     font-size: 1.1rem;
     transition: opacity 300ms ease-in-out;
-    ${props => props.theme.flexSet('start')};
+    ${({ theme }) => theme.flexSet('start')};
   }
 
   & > a > button > div {
