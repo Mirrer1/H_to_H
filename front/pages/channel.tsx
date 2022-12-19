@@ -14,7 +14,8 @@ import useSocket from '@hooks/useSocket';
 import makeSection from '@utils/makeSection';
 import InviteChannel from '@components/Modal/InviteChannel';
 import { IChat, IUser, IChannel } from '@typings/db';
-import { ChannelPageHeader, ChannelPageName, ChannelPageInfo } from '@styles/PageStyle/channel';
+import { ChannelWrapper, ChannelPageHeader, ChannelPageName, ChannelPageInfo } from '@styles/PageStyle/channel';
+import { DragOver } from '@styles/ComponentsStyle/Dialog/chat';
 
 interface Props {
   onClickReturnPage: () => void;
@@ -25,6 +26,7 @@ const Channel = ({ onClickReturnPage }: Props) => {
   const scrollbarRef = useRef<Scrollbars>(null);
   const [chat, onChangeChat, setChat] = useInput('');
   const [inviteChannelVisible, setInviteChannelVisible] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
 
   const { data: myData } = useSWR('/api/users', fetcher);
   const { data: channelData } = useSWR<IChannel>(`/api/workspaces/${workspace}/channels/${channel}`, fetcher);
@@ -87,7 +89,7 @@ const Channel = ({ onClickReturnPage }: Props) => {
 
   const onMessage = useCallback(
     (data: IChat) => {
-      if (data.Channel.name === channel && data.UserId !== myData?.id) {
+      if ((data.Channel.name === channel && data.content.startsWith('uploads\\')) || data.UserId !== myData?.id) {
         mutateChat(chatData => {
           chatData?.[0].unshift(data);
           return chatData;
@@ -121,12 +123,50 @@ const Channel = ({ onClickReturnPage }: Props) => {
     }
   }, [chatData]);
 
+  const onDrop = useCallback(
+    e => {
+      e.preventDefault();
+      console.log(e);
+      const formData = new FormData();
+      if (e.dataTransfer.items) {
+        for (let i = 0; i < e.dataTransfer.items.length; i++) {
+          console.log(e.dataTransfer.items[i]);
+          if (e.dataTransfer.items[i].kind === 'file') {
+            const file = e.dataTransfer.items[i].getAsFile();
+            console.log(e, '.... file[' + i + '].name = ' + file.name);
+            formData.append('image', file);
+          }
+        }
+      } else {
+        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+          console.log(e, '... file[' + i + '].name = ' + e.dataTransfer.files[i].name);
+          formData.append('image', e.dataTransfer.files[i]);
+        }
+      }
+      axios.post(`/api/workspaces/${workspace}/channels/${channel}/images`, formData).then(() => {
+        setDragOver(false);
+        localStorage.setItem(`${workspace}-${channel}`, new Date().getTime().toString());
+      });
+    },
+    [workspace, channel],
+  );
+
+  const onDragOver = useCallback(e => {
+    e.preventDefault();
+    setDragOver(true);
+  }, []);
+
+  const onDragLeave = useCallback(e => {
+    e.preventDefault();
+    setDragOver(false);
+  }, []);
+
   if (!myData) return null;
 
   const chatSections = makeSection(chatData ? chatData.flat().reverse() : []);
 
   return (
-    <>
+    <ChannelWrapper onDrop={onDrop} onDragOver={onDragOver}>
       <ChannelPageHeader>
         <ChannelPageName>
           <button onClick={onClickReturnPage}>
@@ -144,10 +184,16 @@ const Channel = ({ onClickReturnPage }: Props) => {
         </ChannelPageInfo>
       </ChannelPageHeader>
 
-      {inviteChannelVisible && <InviteChannel onClickInviteChannel={onClickInviteChannel} />}
       <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
-    </>
+
+      {dragOver && (
+        <DragOver onDragLeave={onDragLeave} dragOver>
+          업로드할 이미지를 드래그해주세요.
+        </DragOver>
+      )}
+      {inviteChannelVisible && <InviteChannel onClickInviteChannel={onClickInviteChannel} />}
+    </ChannelWrapper>
   );
 };
 

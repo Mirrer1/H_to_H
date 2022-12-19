@@ -38,6 +38,10 @@ export const ChatContent = styled.div`
   margin: 0.5em 0 0 2em;
   ${({ theme }) => theme.flexColumnSet('center', 'start')};
 
+  &:has(p > img) {
+    border: none;
+  }
+
   & > p {
     font-size: 1rem;
     font-weight: 700;
@@ -60,5 +64,33 @@ export const ChatContent = styled.div`
     & > div {
       font-size: 1rem;
     }
+  }
+`;
+
+export const ChatImage = styled.img`
+  max-height: 200;
+
+  ${media.desktop} {
+    max-height: 250;
+  }
+`;
+
+export const DragOver = styled.div<{ dragOver?: boolean }>`
+  display: ${props => props.dragOver || 'none'};
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 64px);
+  background: white;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 5;
+
+  ${media.desktop} {
+    font-size: 2rem;
   }
 `;

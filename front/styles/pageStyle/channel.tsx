@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 import media from '@styles/media';
 
+export const ChannelWrapper = styled.div`
+  position: relative;
+`;
+
 export const ChannelPageHeader = styled.div`
   position: fixed;
   top: 0%;

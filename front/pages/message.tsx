@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import gravatar from 'gravatar';
 import useSWR, { useSWRInfinite } from 'swr';
@@ -15,6 +15,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import useSocket from '@hooks/useSocket';
 import { IDM } from '@typings/db';
 import { MessageHeader } from '@styles/PageStyle/message';
+import { DragOver } from '@styles/ComponentsStyle/Dialog/chat';
 
 interface Props {
   onClickReturnPage: () => void;
@@ -23,6 +24,7 @@ interface Props {
 const Message = ({ onClickReturnPage }: Props) => {
   const scrollbarRef = useRef<Scrollbars>(null);
   const [chat, onChangeChat, setChat] = useInput('');
+  const [dragOver, setDragOver] = useState(false);
 
   const { workspace, id } = useParams<{ workspace: string; id: string }>();
   const { data: userData } = useSWR(`/api/workspaces/${workspace}/users/${id}`, fetcher);
@@ -109,12 +111,50 @@ const Message = ({ onClickReturnPage }: Props) => {
     }
   }, [chatData]);
 
+  const onDrop = useCallback(
+    e => {
+      e.preventDefault();
+      console.log(e);
+      const formData = new FormData();
+      if (e.dataTransfer.items) {
+        for (let i = 0; i < e.dataTransfer.items.length; i++) {
+          if (e.dataTransfer.items[i].kind === 'file') {
+            const file = e.dataTransfer.items[i].getAsFile();
+            console.log('... file[' + i + '].name = ' + file.name);
+            formData.append('image', file);
+          }
+        }
+      } else {
+        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+          console.log('... file[' + i + '].name = ' + e.dataTransfer.files[i].name);
+          formData.append('image', e.dataTransfer.files[i]);
+        }
+      }
+      axios.post(`/api/workspaces/${workspace}/dms/${id}/images`, formData).then(() => {
+        setDragOver(false);
+        localStorage.setItem(`${workspace}-${id}`, new Date().getTime().toString());
+        mutateChat();
+      });
+    },
+    [workspace, id, mutateChat],
+  );
+
+  const onDragOver = useCallback(e => {
+    e.preventDefault();
+    setDragOver(true);
+  }, []);
+
+  const onDragLeave = useCallback(e => {
+    e.preventDefault();
+    setDragOver(false);
+  }, []);
+
   if (!userData || !myData) return null;
 
   const chatSections = makeSection(chatData ? chatData.flat().reverse() : []);
 
   return (
-    <>
+    <div style={{ position: 'relative' }} onDrop={onDrop} onDragOver={onDragOver}>
       <MessageHeader>
         <button onClick={onClickReturnPage}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -127,7 +167,14 @@ const Message = ({ onClickReturnPage }: Props) => {
 
       <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
-    </>
+
+      {dragOver && (
+        <DragOver onDragLeave={onDragLeave} dragOver>
+          업로드할 이미지를 드래그해주세요.
+        </DragOver>
+      )}
+      {dragOver && <div>이미지를 업로드하시겠습니까?</div>}
+    </div>
   );
 };
 
