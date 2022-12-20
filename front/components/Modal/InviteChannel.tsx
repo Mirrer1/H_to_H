@@ -42,17 +42,12 @@ const InviteChannel = ({ onClickInviteChannel }: Props) => {
       }
 
       axios
-        .post(
-          `/api/workspaces/${workspace}/channels/${channel}/members`,
-          {
-            email: newMember,
-          },
-          {
-            withCredentials: true,
-          },
-        )
+        .post(`/api/workspaces/${workspace}/channels/${channel}/members`, {
+          email: newMember,
+        })
         .then(() => {
           setNewMember('');
+          onClickInviteChannel();
           revalidateMembers();
         })
         .catch(error => {
@@ -60,7 +55,7 @@ const InviteChannel = ({ onClickInviteChannel }: Props) => {
           toast.error(error.response?.data, { position: 'top-center' });
         });
     },
-    [newMember],
+    [channel, newMember, revalidateMembers, setNewMember, workspace],
   );
   return (
     <CreateWrapper>
