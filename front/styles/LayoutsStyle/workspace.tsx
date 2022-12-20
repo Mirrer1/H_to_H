@@ -64,7 +64,6 @@ export const Footer = styled.div`
   }
 
   ${media.desktop} {
-    position: relative;
     padding: 1em 0.5em;
     border-right: 1px solid #f0e9d2;
 
