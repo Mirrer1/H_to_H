@@ -28,13 +28,6 @@ export const MessageHeader = styled.div`
     margin-right: 0.5em;
   }
 
-  & > div {
-    width: 0.5em;
-    height: 0.5em;
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.success};
-  }
-
   ${media.desktop} {
     padding: 1.5em;
     z-index: 2;
@@ -51,11 +44,6 @@ export const MessageHeader = styled.div`
     & > p {
       font-size: 1.3rem;
       margin-right: 1em;
-    }
-
-    & > div {
-      width: 0.7em;
-      height: 0.7em;
     }
   }
 `;

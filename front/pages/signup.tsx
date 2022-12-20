@@ -18,9 +18,7 @@ import {
 } from '@styles/PageStyle/signup';
 
 const SignUp = () => {
-  const { data, error, revalidate } = useSWR('/api/users', fetcher, {
-    dedupingInterval: 2000,
-  });
+  const { data: userData } = useSWR('/api/users', fetcher);
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -76,8 +74,8 @@ const SignUp = () => {
     setUserTerm(prev => !prev);
   }, []);
 
-  if (data) {
-    return <Redirect to="/workspace/sleact/channel/일반" />;
+  if (userData) {
+    return <Redirect to="/workspace/sleact" />;
   }
 
   return (

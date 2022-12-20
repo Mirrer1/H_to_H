@@ -167,7 +167,6 @@ const Message = ({ onClickReturnPage }: Props) => {
 
         <img src={gravatar.url(userData.email, { d: 'mm' })} alt={userData.nickname} />
         <p>{userData.nickname}</p>
-        <div></div>
       </MessageHeader>
 
       <ChatList chatSections={chatSections} ref={scrollbarRef} setSize={setSize} isReachingEnd={isReachingEnd} />
