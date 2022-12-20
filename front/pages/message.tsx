@@ -64,7 +64,6 @@ const Message = ({ onClickReturnPage }: Props) => {
           localStorage.setItem(`${workspace}-${id}`, new Date().getTime().toString());
           setChat('');
           if (scrollbarRef.current) {
-            console.log('scrollToBottom!', scrollbarRef.current?.getValues());
             scrollbarRef.current.scrollToBottom();
           }
         });
@@ -122,19 +121,17 @@ const Message = ({ onClickReturnPage }: Props) => {
   const onDrop = useCallback(
     e => {
       e.preventDefault();
-      console.log(e);
       const formData = new FormData();
+
       if (e.dataTransfer.items) {
         for (let i = 0; i < e.dataTransfer.items.length; i++) {
           if (e.dataTransfer.items[i].kind === 'file') {
             const file = e.dataTransfer.items[i].getAsFile();
-            console.log('... file[' + i + '].name = ' + file.name);
             formData.append('image', file);
           }
         }
       } else {
         for (let i = 0; i < e.dataTransfer.files.length; i++) {
-          console.log('... file[' + i + '].name = ' + e.dataTransfer.files[i].name);
           formData.append('image', e.dataTransfer.files[i]);
         }
       }

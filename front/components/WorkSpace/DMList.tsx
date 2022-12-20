@@ -29,7 +29,6 @@ const DMList = ({ setPageVisible }: Props) => {
   );
 
   useEffect(() => {
-    console.log('DMList: workspace 바꼈다', workspace);
     setOnlineList([]);
   }, [workspace]);
 

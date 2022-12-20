@@ -73,7 +73,6 @@ const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
           onChange={onChangeChat}
           onKeyDown={onKeydownChat}
           id="editor-chat"
-          // placeholder={placeholder}
           placeholder="Enter Message..."
           inputRef={textareaRef}
           allowSuggestionsAboveCursor

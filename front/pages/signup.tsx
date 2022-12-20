@@ -62,15 +62,13 @@ const SignUp = () => {
           nickname,
           password,
         })
-        .then(response => {
-          console.log(response);
+        .then(() => {
           setSignupSuccess(true);
         })
         .catch(error => {
           console.log(error.response.data);
           setSignupError(error.response.data);
         });
-      console.log(email, nickname, password);
     }
   }, [submit, idError, nicknameError, passwordError, termError]);
 

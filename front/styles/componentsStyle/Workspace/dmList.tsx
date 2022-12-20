@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import media from '@styles/media';
 
 import { Channels, ChannelHeader, ChannelItem, ChannelItemLink } from '@styles/ComponentsStyle/Workspace/channelList';
 
