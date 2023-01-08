@@ -34,7 +34,7 @@
 
 
 
-## Representative Function
+## Representative Feature
 
 ### Responsive Design
 
