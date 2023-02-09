@@ -40,35 +40,30 @@
 
 * 접근 디바이스 환경에 따른 **`Dynamic Layout `**
 
-<img  style="width: 60%;" src="https://user-images.githubusercontent.com/87924110/208615126-77f2594b-d52c-4544-9758-64c089e04c35.gif">
+https://user-images.githubusercontent.com/87924110/217852106-7f32bb32-f316-4d33-bd98-d79f218ec669.mp4
 
 
 ### Concise and Simple UI
 
 * **간결하고 심플** 한 **`User Interface`**
 
-
-<img style="width: 60%;" src="https://user-images.githubusercontent.com/87924110/208615345-16159d9e-2950-4bc0-a410-33de98b24ad0.gif">
+https://user-images.githubusercontent.com/87924110/217852133-78e9ba6d-5d85-4391-9074-8ff1b8795b77.mp4
 
 
 ### Live Chat and Online Listing
 
 * **실시간** 으로 접속 사용자에 반응하는 **`Live Chat System`**
 
-
-<img style="width: 60%;" src="https://user-images.githubusercontent.com/87924110/208615350-cac53fe8-f5f7-4874-916b-afbfcb502d26.gif">
+https://user-images.githubusercontent.com/87924110/217852152-56e777c0-cafd-4782-ad44-6af5d254897c.mp4
 
 
 ### Image Drag and Drop
 
 * **`Drag and Drop`** 을 활용한 간편한 **이미지 업로드 시스템**
 
-<img style="width: 60%;" src="https://user-images.githubusercontent.com/87924110/208615360-fa68c4bf-1844-447b-957f-f671f230ebea.gif">
-
+https://user-images.githubusercontent.com/87924110/217852189-08262ac0-ae30-4234-9462-c97ea21cadc5.mp4
 
 <br />
-
-
 
 ## Getting Started
 
